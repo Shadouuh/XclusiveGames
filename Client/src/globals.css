@@ -1,0 +1,57 @@
+:root {
+    --background: #0d1016;
+    --light-background: #121928;
+    --gray-background: #1d2735;
+    --border: #1f2937;
+    --dark-violet: #5451e9;
+    --cake-violet: #a78bfa;
+    --blue: #2563eb;
+    --primary-text: #fafafa;
+    --secondary-text: #ccc9cb;
+  }
+  @font-face {
+    font-family: "Montserrat";
+    src: url(./assets/fonts/Montserrat.ttf);
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat";
+  }
+  body {
+    background-color: var(--background);
+    max-height: 100vh;
+    width: 100%;
+  }
+  main {
+    display: flex;
+    flex-direction: row;
+    max-height: 100vh;
+    width: 100%;
+  }
+  .router {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    max-height: 92vh;
+    overflow-y: auto;
+  }
+  .router::-webkit-scrollbar {
+    width: 12px;
+    cursor: pointer;
+  }
+  .router::-webkit-scrollbar-track {
+    background: #1f2937;
+  }
+  .router::-webkit-scrollbar-thumb {
+    background: #a64ac9;
+  }
+  .router::-webkit-scrollbar-thumb:hover {
+    background: #8b2db1;
+  }
+  h2, h3, h4, h5, h6, p{
+    color: var(--primary-text);
+  }
+  
