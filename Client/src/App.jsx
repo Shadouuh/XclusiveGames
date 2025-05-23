@@ -17,6 +17,7 @@ import Users from './pages/UserPage/Page.jsx';
 import Profile from './pages/ProfilePage/Page.jsx';
 import MarketPage from "./pages/MarketPage/Page.jsx";
 import XCoinsPage from "./pages/XcoinsPage/Page.jsx";
+import AdminPage from "./pages/AdminPage/Page.jsx";
 // Layout
 import Layout from './Layout.jsx';
 const App = () => {
@@ -24,6 +25,8 @@ const App = () => {
     <Router>
       <Routes>
         {/* Rutas que no contiene el Layout */}
+        {/* Despues se le agrega verificacion para que solo el admin pueda ver */}
+        <Route path="/admin" element={<AdminPage />} />
         <Route path="/auth" element={<AuthPage />} />
 
         {/* Rutas que contiene el Layout */}

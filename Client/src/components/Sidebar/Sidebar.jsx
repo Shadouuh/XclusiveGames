@@ -68,6 +68,11 @@ const Sidebar = () => {
       text: "Sobre Nosotros",
       redirection: "/about",
     },
+    {
+      icon: <MdInfoOutline size={20} color="snow" strokeWidth="0.01" />,
+      text: "Admin",
+      redirection: "/admin",
+    },
   ];
 
   return (
