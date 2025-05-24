@@ -1,5 +1,5 @@
 import './styles.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LuMail, LuLock, LuUser } from 'react-icons/lu';
 import axios from '../../api/axios';
 import { useNavigate } from 'react-router-dom';
@@ -37,7 +37,7 @@ const AuthPage = () => {
       if (response.status === 200) {
         const user = response.data.user;
         window.localStorage.setItem("user", JSON.stringify(user));
-        // Store token if needed
+        // Guardar el token en el almacenamiento local
 
         notify(response.data.message, "success");
         navigate("/");
@@ -51,6 +51,11 @@ const AuthPage = () => {
 
   const handleSubmitRegister = async (e) => {
     e.preventDefault();
+
+    if (formData.password !== formData.confirmPassword) {
+      notify("Las contraseñas no coinciden", "error");
+      return;x
+    }
 
     try {
       setLoading(true);
@@ -67,6 +72,13 @@ const AuthPage = () => {
     }
   };
 
+  useEffect(() => {
+    const user = window.localStorage.getItem("user");
+    if (user) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   return (
     <section className='auth-container'>
       <div className={`auth-form ${authState === "register" ? "reverse" : ""}`}>
@@ -77,19 +89,51 @@ const AuthPage = () => {
               <h4>Iniciar Sesion</h4>
               <p>Bienvenido de nuevo!</p>
               {/* Formulario Login */}
-              <form action="">
-                <label>Correo Electronico</label>
+              <form onSubmit={handleSubmitLogin}>
+                <label>Correo Electronico o Usuario</label>
                 <div className="input">
                   <LuMail stroke='#ccc9cb'/>
-                  <input type="email" placeholder='tu@dominio.com' />
+                  <input 
+                    type="text" 
+                    name="nickOrEmail"
+                    placeholder='tu@dominio.com o usuario' 
+                    value={formData.nickOrEmail}
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
                 <label>Contraseña</label>
                 <div className="input">
                   <LuLock stroke='#ccc9cb'/>
-                  <input type="password" placeholder='********' />
+                  <input 
+                    type="password" 
+                    name="password"
+                    placeholder='********' 
+                    value={formData.password}
+                    onChange={handleChange}
+                    required
+                  />
                 </div>
 
-                <input type="submit" value="Iniciar Sesion" className='submit-btn'/>
+                <div className="remember-forgot">
+                  <label>
+                    <input
+                      type="checkbox"
+                      name="remember"
+                      checked={formData.remember}
+                      onChange={handleChange}
+                    />
+                    Recordarme
+                  </label>
+                  <a href="#">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <input 
+                  type="submit" 
+                  value={loading ? "Procesando..." : "Iniciar Sesion"} 
+                  className='submit-btn'
+                  disabled={loading}
+                />
               </form>
               <div className="not-account">
                 <p>No tienes una Cuenta?
@@ -104,7 +148,7 @@ const AuthPage = () => {
               <h4>Crear Cuenta</h4>
               <p>Únete a nuestra comunidad de gamers!</p>
               {/* Formulario Registro */}
-              <form onSubmit={authState === "login" ? handleSubmitLogin : handleSubmitRegister}>
+              <form onSubmit={handleSubmitRegister}>
                 <label>Nombre de Usuario</label>
                 <div className="input">
                   <LuUser stroke='#ccc9cb'/>
@@ -120,9 +164,9 @@ const AuthPage = () => {
                 <div className="input">
                   <LuMail stroke='#ccc9cb'/>
                   <input 
-                    type={authState === "login" ? "text" : "email"}
+                    type="email"
                     name="nickOrEmail"
-                    placeholder={`tu@dominio.com`}
+                    placeholder='tu@dominio.com'
                     value={formData.nickOrEmail}
                     onChange={handleChange}
                     required 
@@ -131,24 +175,33 @@ const AuthPage = () => {
                 <label>Contraseña</label>
                 <div className="input">
                   <LuLock stroke='#ccc9cb'/>
-                  <input type="password" placeholder='********' />
+                  <input 
+                    type="password"
+                    name="password"
+                    placeholder='********'
+                    value={formData.password}
+                    onChange={handleChange}
+                    required 
+                  />
                 </div>
                 <label>Confirmar Contraseña</label>
                 <div className="input">
                   <LuLock stroke='#ccc9cb'/>
                   <input 
-                type="password"
-                name="password"
-                placeholder='********'
-                value={formData.password}
-                onChange={handleChange}
-                required />
+                    type="password"
+                    name="confirmPassword"
+                    placeholder='********'
+                    onChange={handleChange}
+                    required 
+                  />
                 </div>
 
-                <input type="submit"
-                        value={loading ? "Procesando..." : (authState === "login" ? "Iniciar Sesión" : "Registrarse")}
-                        className='submit-btn'
-                        disabled={loading}/>
+                <input 
+                  type="submit"
+                  value={loading ? "Procesando..." : "Registrarse"}
+                  className='submit-btn'
+                  disabled={loading}
+                />
               </form>
               <div className="not-account">
                 <p>Ya tienes una Cuenta?
@@ -174,82 +227,3 @@ const AuthPage = () => {
 };
 
 export default AuthPage;
-
-
-{/*
-          <h4>{authState === "login" ? "Iniciar Sesión" : "Registrarse"}</h4>
-          <p>{authState === "login" ? "Bienvenido de nuevo!" : "Crea tu cuenta"}</p>
-
-          
-          <form onSubmit={authState === "login" ? handleSubmitLogin : handleSubmitRegister}>
-            <label>{`Correo Electrónico${authState === "login" ? " o Usuario" : ""}`}</label>
-            <div className="input">
-              <LuMail />
-              <input
-                type={authState === "login" ? "text" : "email"}
-                name="nickOrEmail"
-                placeholder={`Correo Electrónico${authState === "login" ? " o Usuario" : ""}`}
-                value={formData.nickOrEmail}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            {authState === "register" && (
-              <>
-                <label>Usuario</label>
-                <div className="input">
-                  <LuMail />
-                  <input
-                    type="text"
-                    name="nick"
-                    placeholder='Usuario'
-                    value={formData.nick}
-                    onChange={handleChange}
-                    required
-                  />
-                </div></>
-            )}
-
-            <label>Contraseña</label>
-            <div className="input">
-              <LuLock />
-              <input
-                type="password"
-                name="password"
-                placeholder='********'
-                value={formData.password}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            {authState === "login" && (
-              <div className="remember-forgot">
-                <label>
-                  <input
-                    type="checkbox"
-                    name="remember"
-                    checked={formData.remember}
-                    onChange={handleChange}
-                  />
-                  Recordarme
-                </label>
-                <a href="#">¿Olvidaste tu contraseña?</a>
-              </div>
-            )}
-
-            <input
-              type="submit"
-              value={loading ? "Procesando..." : (authState === "login" ? "Iniciar Sesión" : "Registrarse")}
-              className='submit-btn'
-              disabled={loading}
-            />
-          </form>
-
-          <div className="not-account">
-            <p>{authState === "login" ? "¿No tienes una Cuenta?" : "¿Ya tienes una cuenta?"}</p>
-            <button className='toggle-auth' onClick={toggleAuthState}>
-              {authState === "login" ? "Registrarse" : "Iniciar Sesión"}
-            </button>
-*/}
