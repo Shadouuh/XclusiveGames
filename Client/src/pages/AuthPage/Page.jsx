@@ -37,7 +37,7 @@ const AuthPage = () => {
       if (response.status === 200) {
         const user = response.data.user;
         window.localStorage.setItem("user", JSON.stringify(user));
-        // Store token if needed
+        
 
         notify(response.data.message, "success");
         navigate("/");

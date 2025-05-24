@@ -30,8 +30,8 @@
   color: var(--secondary-text);
   outline: none;
   width: 100%;
-  font-size: 0.75rem;
-  font-weight: 300;
+  font-size: 0.8rem;
+  font-weight: 400;
 }
 .search-input::placeholder {
   color: var(--secondary-text);

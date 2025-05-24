@@ -58,7 +58,7 @@ const Nav = () => {
           <LuCoins size={18} color="#FAFAFA" strokeWidth="1.4" />
         </div>
       </div>
-      <button onClick={isLogged ? handleLogout : () => navigate('/auth')}>
+      <button onClick={isLogged ? handleLogout : () => navigate('/auth')} className="login-btn">
         {isLogged ? 'Cerrar Sesión' : 'Iniciar Sesión'}
       </button>
     </nav>

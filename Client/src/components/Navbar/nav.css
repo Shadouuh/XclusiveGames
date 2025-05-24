@@ -4,11 +4,37 @@
   border-bottom: 1px solid var(--border);
   justify-content: space-between;
 }
-.bar-resizer{
+
+.login-btn {
+  background: linear-gradient(to right, var(--dark-violet), var(--blue));
+  border: none;
+  font-size: 1rem;
+  color: snow;
+  width: fit-content;
+  font-weight: 500;
+  display: flex;
+  justify-self: center;
+  align-self: center;
+  margin: 10px;
+  padding: 8px 16px;
+  font-size: 0.7rem;
+  font-weight: 400;
+  border-radius: 14px;
+  transition: ease-in-out .2s;
+  cursor: pointer;
+  height: fit-content;
+}
+
+.login-btn:hover {
+  transform: scaleX(1.02);
+}
+
+.bar-resizer {
   width: 50vw;
   display: flex;
   align-items: center;
 }
+
 .nav-title {
   display: flex;
   width: 200px;
@@ -16,31 +42,36 @@
   justify-content: center;
   gap: 10px;
 }
-.nav-menu{
-    display: flex;
-    gap: 14px;
-    align-items: center;
-    margin-right: 10px;
+
+.nav-menu {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  margin-right: 10px;
 }
-.coins{
-    display: flex;
-    gap: 5px;
-    align-items: center;
-    padding: 4px;
-    border-radius: 5px;
-    border: transparent 1px solid;
-    transition: ease-in-out .15s;    
-    cursor: pointer;
+
+.coins {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  padding: 4px;
+  border-radius: 5px;
+  border: transparent 1px solid;
+  transition: ease-in-out .15s;
+  cursor: pointer;
 }
-.coins:hover{
-    border: var(--secondary-text) solid 1px; 
-    background-color: #070708;
+
+.coins:hover {
+  border: var(--secondary-text) solid 1px;
+  background-color: #070708;
 }
+
 h1 {
   color: var(--primary-text);
   font-size: 1.1rem;
   font-weight: 700;
 }
+
 p {
   color: var(--secondary-text);
   font-size: 14px;
