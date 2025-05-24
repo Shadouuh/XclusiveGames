@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 // Icons
 import { LuGamepad } from "react-icons/lu";
 import { LuCoins } from "react-icons/lu";
@@ -8,7 +10,36 @@ import { FaRegHeart } from "react-icons/fa6";
 import "./nav.css";
 // Components 
 import Searchbar from '../Search/Searchbar.jsx'
+// Hooks
+import useConfirmation from "../../hooks/useConfirmation.jsx";
+import useNotification from "../../hooks/useNotification.jsx";
+
 const Nav = () => {
+  const { confirm } = useConfirmation();
+  const { notify } = useNotification();
+  const navigate = useNavigate();
+  const [isLogged, setIsLogged] = useState(false);
+
+  useEffect(() => {
+    //habria que verificar que el token sea valido
+    const userLocal = localStorage.getItem('user');
+    if (userLocal) {
+      setIsLogged(true);
+    }
+  }, [])
+
+  const handleLogout = () => {
+    confirm(
+      "¿Estás seguro?",
+      () => {
+        localStorage.removeItem('user');
+        setIsLogged(false);
+        notify('Sesión cerrada', 'success');
+        navigate('/');
+      },
+    );
+  }
+
   return (
     <nav className="navbar">
       <div className="nav-title">
@@ -16,7 +47,7 @@ const Nav = () => {
         <h1>Xclusive Games</h1>
       </div>
       <div className="bar-resizer">
-      <Searchbar />
+        <Searchbar />
       </div>
       <div className="nav-menu">
         <FaRegHeart size={18} color="#ccc9cb" strokeWidth="0.01" />
@@ -27,6 +58,9 @@ const Nav = () => {
           <LuCoins size={18} color="#FAFAFA" strokeWidth="1.4" />
         </div>
       </div>
+      <button onClick={isLogged ? handleLogout : () => navigate('/auth')}>
+        {isLogged ? 'Cerrar Sesión' : 'Iniciar Sesión'}
+      </button>
     </nav>
   );
 };

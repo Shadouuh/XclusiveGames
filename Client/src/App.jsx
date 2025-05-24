@@ -1,5 +1,8 @@
 // Rutas
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+// Notificaciones
+import { ToastContainer } from "react-toastify";
+
 // Estilos
 import './globals.css';
 // Paginas
@@ -23,6 +26,18 @@ import Layout from './Layout.jsx';
 const App = () => {
   return (
     <Router>
+      <ToastContainer
+          theme="dark"
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={true}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          limit={3}
+          pauseOnFocusLoss
+          pauseOnHover
+        />
       <Routes>
         {/* Rutas que no contiene el Layout */}
         {/* Despues se le agrega verificacion para que solo el admin pueda ver */}
