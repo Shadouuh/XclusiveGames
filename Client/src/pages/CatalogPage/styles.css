@@ -1,12 +1,11 @@
 .catalog-container {
-    max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
     color: #fff;
   }
   
   .catalog-title {
-    font-size: 2rem;
+    font-size: 1.4rem;
     margin-bottom: 20px;
     color: #fff;
     text-align: left;
