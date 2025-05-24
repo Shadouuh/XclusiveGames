@@ -114,16 +114,16 @@ const AuthPage = () => {
                 </div>
 
                 <div className="remember-forgot">
-                  <label>
+                  <label className="custom-checkbox">
                     <input
                       type="checkbox"
                       name="remember"
                       checked={formData.remember}
                       onChange={handleChange}
                     />
-                    Recordarme
+                    <span className="checkmark"></span>
+                    <span className="checkbox-text">Recordarme</span>
                   </label>
-                  <a href="#">¿Olvidaste tu contraseña?</a>
                 </div>
 
                 <input 

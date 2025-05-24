@@ -207,3 +207,77 @@ input::placeholder{
         font-size: 1rem;
     }
 }
+
+/* Modern Checkbox Styling */
+.remember-forgot {
+  margin: 0px 0;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 30px;
+  cursor: pointer;
+  font-size: 14px;
+  user-select: none;
+  color: #8a8a8a;
+  transition: color 0.2s ease;
+}
+
+.custom-checkbox:hover {
+  color: #a970ff;
+}
+
+.custom-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  left: 0;
+  height: 18px;
+  width: 18px;
+  background-color: transparent;
+  border: 2px solid #8a8a8a;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.custom-checkbox:hover .checkmark {
+  border-color: #a970ff;
+}
+
+.custom-checkbox input:checked ~ .checkmark {
+  background-color: #a970ff;
+  border-color: #a970ff;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.custom-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.custom-checkbox .checkmark:after {
+  left: 4px;
+  top: -1px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.checkbox-text {
+  margin-left: -6px;
+  font-weight: 500;
+}
