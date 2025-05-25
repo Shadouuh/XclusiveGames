@@ -7,7 +7,10 @@ process.loadEnvFile();
 
 const app = express();
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true
+}));
 app.use(express.json());
 
 // muestra las peticiones en consola
@@ -20,6 +23,7 @@ app.use((req, res, next) => {
 app.use('/api', require(path.join(__dirname, 'routes', 'crud')));
 app.use('/user', require(path.join(__dirname, 'routes', 'user')));
 app.use('/games', require(path.join(__dirname, 'routes', 'games')));
+app.use('/cart', require(path.join(__dirname, 'routes', 'cart')));
 
 // Testeo de api
 app.get('/ping', async (req, res) => {

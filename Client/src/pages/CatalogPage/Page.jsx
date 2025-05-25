@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Games } from '../../exampleData/games.js';
+import axios from 'axios';
 import GameCard from '../../components/GameCard/GameCard.jsx';
 import './styles.css';
 import Searchbar from '../../components/Search/Searchbar.jsx';
@@ -13,8 +13,16 @@ const Catalog = () => {
   const [priceRange, setPriceRange] = useState([0, 15000]);
 
   useEffect(() => {
-    setGames(Games);
-    setFilteredGames(Games);
+    const fetchGames = async () => {
+      try {
+        const response = await axios.get('http://localhost:5001/games');
+        setGames(response.data);
+        setFilteredGames(response.data);
+      } catch (error) {
+        console.error('Error al obtener los juegos:', error);
+      }
+    };
+    fetchGames();
   }, []);
 
   useEffect(() => {
@@ -26,24 +34,24 @@ const Catalog = () => {
 
     if (searchTerm) {
       filtered = filtered.filter(game => 
-        game.nombre.toLowerCase().includes(searchTerm.toLowerCase())
+        game.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
     if (selectedPlatforms.length > 0) {
       filtered = filtered.filter(game => 
-        game.plataforma.some(platform => selectedPlatforms.includes(platform))
+        selectedPlatforms.includes(game.plataform)
       );
     }
 
     if (selectedGenres.length > 0) {
       filtered = filtered.filter(game => 
-        game.generos.some(genre => selectedGenres.includes(genre))
+        selectedGenres.includes(game.genre)
       );
     }
 
     filtered = filtered.filter(game => 
-      game.precio >= priceRange[0] && game.precio <= priceRange[1]
+      game.price >= priceRange[0] && game.price <= priceRange[1]
     );
 
     setFilteredGames(filtered);
@@ -69,8 +77,8 @@ const Catalog = () => {
     setPriceRange([0, parseInt(e.target.value)]);
   };
 
-  const allPlatforms = [...new Set(games.flatMap(game => game.plataforma))];
-  const allGenres = [...new Set(games.flatMap(game => game.generos))];
+  const allPlatforms = [...new Set(games.map(game => game.plataform))];
+  const allGenres = [...new Set(games.map(game => game.genre))];
 
   return (
     <div className="catalog-container">
@@ -137,12 +145,12 @@ const Catalog = () => {
         {filteredGames.length > 0 ? (
           filteredGames.map(game => (
             <GameCard 
-              key={game.id}
-              id={game.id}
-              name={game.nombre}
-              image={game.imagen}
-              platform={game.plataforma[0]} 
-              price={game.precio}
+              key={game.id_game}
+              id={game.id_game}
+              name={game.name}
+              image={game.image}
+              platform={game.plataform} 
+              price={game.price}
             />
           ))
         ) : (

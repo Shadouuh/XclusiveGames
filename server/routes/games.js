@@ -59,7 +59,7 @@ router.post('/createGame', verificarToken, async (req, res) => {
 
 });
 
-router.get('/games', verificarToken, async (req, res) => {
+router.get('/', async (req, res) => {
 
     try {
 
