@@ -15,7 +15,7 @@ CREATE TABLE users(
     bio TEXT,
     age INT,
     birthday DATE,
-    FOREIGN KEY (id_login) REFERENCES login(id_login) ON DELETE CASCADE -- (si se borra el login, se borra el usuario)
+    FOREIGN KEY (id_login) REFERENCES login(id_login)
 );
 
 -- inserts de ejemplo para usuarios
@@ -52,8 +52,8 @@ CREATE TABLE cart (
     id_game INT NOT NULL,
     quantity INT NOT NULL DEFAULT 1,
     added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE CASCADE,
-    FOREIGN KEY (id_game) REFERENCES games(id_game) ON DELETE CASCADE,
+    FOREIGN KEY (id_user) REFERENCES users(id_user),
+    FOREIGN KEY (id_game) REFERENCES games(id_game),
     UNIQUE(id_user, id_game) -- (un usuario solo puede tener una entrada por juego en el carrito (se actualiza la cantidad))
 );
 
@@ -68,7 +68,7 @@ CREATE TABLE transactions (
     id_user INT NOT NULL,
     transaction_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     total_amount DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (id_user) REFERENCES users(id_user) ON DELETE SET NULL
+    FOREIGN KEY (id_user) REFERENCES users(id_user)
 );
 
 -- tabla para los detalles de cada transaccion (que juegos se compraron en cada transaccion)
@@ -79,8 +79,8 @@ CREATE TABLE transaction_details (
     id_game INT NOT NULL,
     quantity INT NOT NULL,
     price_at_purchase DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (id_transaction) REFERENCES transactions(id_transaction) ON DELETE CASCADE, -- si se borra la transaccion, se borran sus detalles
-    FOREIGN KEY (id_game) REFERENCES games(id_game) ON DELETE SET NULL
+    FOREIGN KEY (id_transaction) REFERENCES transactions(id_transaction), -- si se borra la transaccion, se borran sus detalles
+    FOREIGN KEY (id_game) REFERENCES games(id_game) 
 );
 
 -- inserts de ejemplo para transacciones y detalles de transaccion
