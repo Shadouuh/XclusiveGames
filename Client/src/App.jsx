@@ -21,6 +21,8 @@ import Profile from './pages/ProfilePage/Page.jsx';
 import MarketPage from "./pages/MarketPage/Page.jsx";
 import XCoinsPage from "./pages/XcoinsPage/Page.jsx";
 import AdminPage from "./pages/AdminPage/Page.jsx";
+import AdminLayout from "./pages/AdminPage/AdminLayout.jsx";
+import GamesManagement from "./pages/AdminPage/GamesManagement.jsx";
 // Layout
 import Layout from './Layout.jsx';
 const App = () => {
@@ -41,7 +43,10 @@ const App = () => {
       <Routes>
         {/* Rutas que no contiene el Layout */}
         {/* Despues se le agrega verificacion para que solo el admin pueda ver */}
-        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminPage />} />
+          <Route path="games" element={<GamesManagement />} />
+        </Route>
         <Route path="/auth" element={<AuthPage />} />
 
         {/* Rutas que contiene el Layout */}
