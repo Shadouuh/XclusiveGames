@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { Games } from '../../exampleData/games.js';
 import GameCard from '../../components/GameCard/GameCard.jsx';
 import './styles.css';
 import Searchbar from '../../components/Search/Searchbar.jsx';
@@ -13,19 +13,8 @@ const Catalog = () => {
   const [priceRange, setPriceRange] = useState([0, 15000]);
 
   useEffect(() => {
-    const fetchGames = async () => {
-      try {
-        const response = await axios.get('http://localhost:5001/games');
-        const genreResponse = await axios.get('http://localhost:5001/all/generos');
-        console.log(genreResponse.data);
-        setGames(response.data);
-        console.log(response.data);
-        setFilteredGames(response.data);
-      } catch (error) {
-        console.error('Error al obtener los juegos:', error);
-      }
-    };
-    fetchGames();
+    setGames(Games);
+    setFilteredGames(Games);
   }, []);
 
   useEffect(() => {
@@ -37,24 +26,24 @@ const Catalog = () => {
 
     if (searchTerm) {
       filtered = filtered.filter(game => 
-        game.name.toLowerCase().includes(searchTerm.toLowerCase())
+        game.nombre.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
     if (selectedPlatforms.length > 0) {
       filtered = filtered.filter(game => 
-        selectedPlatforms.includes(game.plataform)
+        game.plataforma.some(platform => selectedPlatforms.includes(platform))
       );
     }
 
     if (selectedGenres.length > 0) {
       filtered = filtered.filter(game => 
-        selectedGenres.includes(game.genre)
+        game.generos.some(genre => selectedGenres.includes(genre))
       );
     }
 
     filtered = filtered.filter(game => 
-      game.price >= priceRange[0] && game.price <= priceRange[1]
+      game.precio >= priceRange[0] && game.precio <= priceRange[1]
     );
 
     setFilteredGames(filtered);
@@ -80,88 +69,88 @@ const Catalog = () => {
     setPriceRange([0, parseInt(e.target.value)]);
   };
 
-  const allPlatforms = [...new Set(games.map(game => game.plataform))];
-  const allGenres = [...new Set(games.map(game => game.genre))];
+  const allPlatforms = [...new Set(games.flatMap(game => game.plataforma))];
+  const allGenres = [...new Set(games.flatMap(game => game.generos))];
 
   return (
     <div className="catalog-container">
-      <h1 className="catalog-title">Catálogo de Juegos</h1>
-      
-      <div className="catalog-filters">
-        <div className="search-catalog">
-        <Searchbar/>
-        </div>
-          
-        
-        
-        <div className="filter-section">
-          <div className="filter-group">
-            <h3>Categorías</h3>
-            <div className="filter-options">
-              {allGenres.slice(0, 8).map(genre => (
-                <button 
-                  key={genre}
-                  className={selectedGenres.includes(genre) ? 'filter-btn active' : 'filter-btn'}
-                  onClick={() => handleGenreChange(genre)}
-                >
-                  {genre}
-                </button>
-              ))}
-            </div>
-          </div>
-          
-          <div className="filter-group">
-            <h3>Plataformas</h3>
-            <div className="filter-options">
-              {allPlatforms.map(platform => (
-                <button 
-                  key={platform}
-                  className={selectedPlatforms.includes(platform) ? 'filter-btn active' : 'filter-btn'}
-                  onClick={() => handlePlatformChange(platform)}
-                >
-                  {platform}
-                </button>
-              ))}
-            </div>
-          </div>
-          
-          <div className="filter-group">
-            <h3>Precio</h3>
-            <div className="price-slider">
-              <input 
-                type="range" 
-                min="0" 
-                max="15000" 
-                value={priceRange[1]} 
-                onChange={handlePriceChange}
-              />
-              <div className="price-range">
-                <span>$0</span>
-                <span>${priceRange[1]}</span>
-              </div>
-            </div>
-          </div>
-        </div>
+    <h1 className="catalog-title">Catálogo de Juegos</h1>
+    
+    <div className="catalog-filters">
+      <div className="search-catalog">
+      <Searchbar/>
       </div>
+        
       
-      <div className="games-container">
-        {filteredGames.length > 0 ? (
-          filteredGames.map(game => (
-            <GameCard 
-              key={game.id_game}
-              id={game.id_game}
-              name={game.name}
-              image={game.image}
-              platform={game.plataform} 
-              price={game.price}
+      
+      <div className="filter-section">
+        <div className="filter-group">
+          <h3>Categorías</h3>
+          <div className="filter-options">
+            {allGenres.slice(0, 8).map(genre => (
+              <button 
+                key={genre}
+                className={selectedGenres.includes(genre) ? 'filter-btn active' : 'filter-btn'}
+                onClick={() => handleGenreChange(genre)}
+              >
+                {genre}
+              </button>
+            ))}
+          </div>
+        </div>
+        
+        <div className="filter-group">
+          <h3>Plataformas</h3>
+          <div className="filter-options">
+            {allPlatforms.map(platform => (
+              <button 
+                key={platform}
+                className={selectedPlatforms.includes(platform) ? 'filter-btn active' : 'filter-btn'}
+                onClick={() => handlePlatformChange(platform)}
+              >
+                {platform}
+              </button>
+            ))}
+          </div>
+        </div>
+        
+        <div className="filter-group">
+          <h3>Precio</h3>
+          <div className="price-slider">
+            <input 
+              type="range" 
+              min="0" 
+              max="15000" 
+              value={priceRange[1]} 
+              onChange={handlePriceChange}
             />
-          ))
-        ) : (
-          <div className="no-games">No se encontraron juegos con los filtros seleccionados</div>
-        )}
+            <div className="price-range">
+              <span>$0</span>
+              <span>${priceRange[1]}</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  );
+    
+    <div className="games-container">
+      {filteredGames.length > 0 ? (
+        filteredGames.map(game => (
+          <GameCard 
+            key={game.id}
+            id={game.id}
+            name={game.nombre}
+            image={game.imagen}
+            platform={game.plataforma[0]} 
+            price={game.precio}
+          />
+        ))
+      ) : (
+        <div className="no-games">No se encontraron juegos con los filtros seleccionados</div>
+      )}
+    </div>
+  </div>
+);
 };
 
 export default Catalog;
