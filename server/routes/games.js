@@ -9,39 +9,34 @@ init();
 
 router.post('/createGame', verificarToken, async (req, res) => {
 
-    const { name, price, plataform, genre, description, release_date, stock, status, id_review } = req.body;
-
-    if (!name || !price || !plataform || !genre || !description || !release_date || stock == null || status == null || !id_review) {
-
-        return handleError(res, 'Todos los campos son requeridos', null, 400);
-
-    }
-
-    const gameData = {
-        name,
-        price,
-        plataform,
-        genre,
-        description,
-        release_date,
-        stock,
-        status,
-        id_review
-    };
+    const { name, price, description, release_date, stock, genres, platforms } = req.body;
 
     try {
 
-        const columFields = Object.keys(gameData); //Obtien el nombre de las columnas a insertar
-        const columValues = Object.values(gameData);//Obtien los datos COrrespondientes
+        const query = `INSERT INTO games (name, price, description, release_data, stock, status) VALUES (?, ?, ?, ?, ?, ?)`;
 
-        const query = `INSERT INTO games (${columFields.join(',')}) VALUES (${columFields.map(() => '?').join(',')})`;
+        const [resultGame] = await conex.query(query, [name, price, description, release_date, stock, stock > 0]);
 
-        const [resultGame] = await conex.query(query, columValues);
+        const gameID = resultGame.insertID
+
+        for (let genre of genres) {
+
+            const query = 'INSERT INTO games_genres (id_game, id_genre) VALUES (?,?)';
+            await conex.query(query, [gameID, genre]);
+
+        }
+
+        for (let platform of platforms) {
+
+            const query = 'INSERT INTO games_platforms (id_game, id_platform) VALUES (?,?)';
+            await conex.query(query, [gameID, platform]);
+
+        }
 
         res.status(201).send({
 
             message: "Juego creado correctamente",
-            gamID: resultGame.insertId
+            gameID: resultGame.insertId
 
         });
 
@@ -53,6 +48,7 @@ router.post('/createGame', verificarToken, async (req, res) => {
 
         }
 
+        console.error(err);
         return handleError(res, 'Error al crear el juego', err);
 
     }
@@ -63,71 +59,107 @@ router.get('/', async (req, res) => {
 
     try {
 
-        const [games] = await conex.query('SELECT * FROM games');
+        const [games] = await conex.query('SELECT * FROM games WHERE deleted_at IS NULL')
 
-        res.status(200).json(games);
+        for (let game of games) {
 
-    } catch (err) {
+            const [genres] = await conex.query(`
 
-        return handleError(res, 'Error al obtner los juegos', err);
+                SELECT g.name FROM genres g
+                JOIN games_genres gg ON g.id_genre = gg.id_genre WHERE gg.id_game = ? `,
+                [game.id_game]
+            );
 
-    }
+            game.genres = genres.map(g => g.name);
 
-});
+            const [platforms] = await conex.query(`
 
-router.delete('/deleteGame/:id', verificarToken, async (req, res) => {
+                SELECT p.name FROM platforms p
+                JOIN games_platforms gp ON p.id_platform = gp.id_platform WHERE gp.id_game = ?`,
+                [game.id_game]
 
-    const { id } = req.params;
+            );
 
-    if (isNaN(id)) return handleError(res, 'El id no es valido', null, 400);
-
-    try {
-
-        const result = await conex.query('DELETE FROM games WHERE id_games = ?', [id]);
-
-        if (result.affectedRows == 0) return handleError(res, 'JUego no encontrado', null, 404);
-
-
-
-        res.status(200).json({ message: 'Juego eliminado correctamente' });
-
-    } catch (err) {
-
-        return handleError(res, 'Erro al eliminar juego', err)
-
-    }
-
-});
-
-router.put('/updateGame/:id', verificarToken, async (req, res) => {
-
-    const { id } = req.params;
-
-    if (isNaN(id)) return handleError(res, 'EL id no es vvalido', null, 400);
-
-    const { name, price, plataform, genre, description, release_date, stock, status, id_review } = req.body;
-
-    try {
-
-        const values = 'UPDATE games SET name = ?, price = ?, plataform = ?, genre = ?, description = ?, release_date = ?, stock = ?, status = ?, id_review = ? WHERE id_games = ?';
-
-        const [result] = await conex.query(query, values);
-
-        if (result.affectedRows == 0) {
-
-            return handleError(res, 'Juego no encontrado', null, 404)
+            game.platforms = platforms.map(p => p.name);
 
         }
 
-        res.status(200).json({ message: 'Juego actauliado corresctaente' });
+        res.json(games);
 
     } catch (err) {
 
-        return handleError(res, 'Error a actualixar el juegfo', err)
+        console.error(err);
+        res.status(500).json({ message: 'Error al obtener los juegos', err });
 
     }
 
 });
 
+router.put('/updateGame/:id', async (req, res) => {
+    const { name, price, description, release_date, stock, genres, platforms } = req.body;
+
+    const gameId = req.params.id;
+
+    try {
+
+        const query = "UPDATE games SET name = ?, price = ?, description = ?, release_date = ?, stock = ?, status = ? WHERE id_game = ?";
+        const [resultGame] = await conex.execute(query, [name, price, description, release_date, stock, stock > 0, gameId]);
+
+        //Eliminar y volover a insertar los generos y plataformas
+        await conex.query('DELETE FROM games_genres WHERE id_game = ?', [gameId]);
+        await conex.query('DELETE FROM games_platforms WHERE id_game = ?', [gameId]);
+
+        for (let genre of genres) {
+
+            await conex.query('INSERT INTO games_genres (id_game, id_genre) VALUES (?, ?)',
+            [gameId, genre]);
+
+        }
+
+        for (let platform of platforms) {
+
+            await conex.query('INSERT INTO games_platforms (id_game, id_platform) VALUES (?, ?)',
+            [gameId, platform]);
+
+        }
+
+        res.status(201).send({
+
+            message: "Juego actualizado correctamente",
+            game: resultGame
+
+        })
+
+    } catch (err) {
+
+        console.error(err);
+        res.status(500).json({ message: "Error al actualizar juego", err});
+
+    }
+
+});
+
+router.delete('/deleteGame/:id', async (req, res) => {
+    try {
+
+        const query = "UPDATE games SET deleted_at = NOW() WHERE id_game = ?";
+        await conex.execute(query, [req.params.id]);
+
+        res.status(201).send({
+
+            message: 'JUego eliminado correctamente',
+            gameId: req.params.id
+
+        });
+
+    } catch (err) {
+
+        console.error(err);
+        res.status(500).json({ message: "Error al eliminar juego", err});
+
+    }
+
+});
 
 module.exports = router;
+
