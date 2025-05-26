@@ -9,7 +9,7 @@ const Searchbar = () => {
         <CiSearch size={18} color="#FAFAFA" />
       </button>
       <input
-        className="search-input"
+        className="search-bar-input"
         type="text"
         placeholder="Buscar Juegos..."
       />

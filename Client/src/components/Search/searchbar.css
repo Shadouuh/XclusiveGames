@@ -24,7 +24,7 @@
 .search-button:active {
   transform: scale(1.01);
 }
-.search-input {
+.search-bar-input {
   border-style: none;
   background-color: transparent;
   color: var(--secondary-text);
@@ -33,6 +33,6 @@
   font-size: 0.8rem;
   font-weight: 400;
 }
-.search-input::placeholder {
+.search-bar-input::placeholder {
   color: var(--secondary-text);
 }

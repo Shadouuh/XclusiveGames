@@ -16,7 +16,10 @@ const Catalog = () => {
     const fetchGames = async () => {
       try {
         const response = await axios.get('http://localhost:5001/games');
+        const genreResponse = await axios.get('http://localhost:5001/all/generos');
+        console.log(genreResponse.data);
         setGames(response.data);
+        console.log(response.data);
         setFilteredGames(response.data);
       } catch (error) {
         console.error('Error al obtener los juegos:', error);
