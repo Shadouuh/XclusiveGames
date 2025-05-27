@@ -58,13 +58,11 @@ router.post('/create', verificarToken, async (req, res) => {
 router.get('/all', async (req, res) => {
 
     try {
-
         const [games] = await conex.query('SELECT * FROM games WHERE deleted_at IS NULL')
 
         for (let game of games) {
 
             const [genres] = await conex.query(`
-
                 SELECT g.name FROM genres g
                 JOIN games_genres gg ON g.id_genre = gg.id_genre WHERE gg.id_game = ? `,
                 [game.id_game]
@@ -73,24 +71,60 @@ router.get('/all', async (req, res) => {
             game.genres = genres.map(g => g.name);
 
             const [platforms] = await conex.query(`
-
                 SELECT p.name FROM platforms p
                 JOIN games_platforms gp ON p.id_platform = gp.id_platform WHERE gp.id_game = ?`,
                 [game.id_game]
-
             );
 
             game.platforms = platforms.map(p => p.name);
-
         }
 
-        res.status(200).json(games);
+        res.status(200).json({games});
 
     } catch (err) {
         return handleError(res, 'Error al obtener los juegos', err);
     }
+});
+
+router.get('/:id', async (req, res) =>{
+
+const gameID = req.params.id;
+
+try{
+
+    const [games] = await conex.query('SELECT * FROM games WHERE id_game = ? AND deleted_at IS NULL', 
+        [gameID]
+    );
+
+    if(games.length == 0) return handleErro(res, "Jueego no encontrado", null, 404);
+
+    const game = games[0];
+
+    
+    const [genres] = await conex.query(`
+        SELECT g.name FROM genres g
+        JOIN games_genres gg ON g.id_genre = gg.id_genre WHERE gg.id_game = ? `,
+        [game.id_game]
+    );
+
+    game.genres = genres.map(g => g.name);
+
+    const [platforms] = await conex.query(`
+        SELECT p.name FROM platforms p
+        JOIN games_platforms gp ON p.id_platform = gp.id_platform WHERE gp.id_game = ?`,
+        [game.id_game]
+    );
+
+    game.platforms = platforms.map(p => p.name);
+
+    res.status(200).json({games});
+
+} catch (err){
+    return handleError(res, 'Error al obtener el juego', err);
+}
 
 });
+
 
 router.put('/updateGame/:id', async (req, res) => {
     const { name, price, description, release_date, stock, genres, platforms } = req.body;
