@@ -201,3 +201,13 @@ CREATE TABLE transaction_details (
 CREATE TABLE review(
     id_review INT PRIMARY KEY AUTO_INCREMENT
 );
+
+CREATE TABLE requeriments( 
+    id_requeriment INT PRIMARY KEY AUTO_INCREMENT, 
+    id_game INT NOT NULL, tipo ENUM('minimos', 'recomendados') NOT NULL, 
+    procesador VARCHAR(255), 
+    memoria VARCHAR(255),
+    graficos VARCHAR(255), 
+    almacenamiento VARCHAR(255), 
+    FOREIGN KEY (id_game) REFERENCES games(id_game) 
+ );
