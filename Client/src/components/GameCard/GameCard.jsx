@@ -51,7 +51,7 @@ const GameCard = ({id, name, image, platform, price}) => {
     };
     
     return (
-        <div className="game-card">
+        <div className="game-card-comp">
             <div className="game-image">
                 <div className="platform-feature">
                     {platform}

@@ -4,10 +4,11 @@
     align-items: center;
     justify-content: center;
     padding: 1rem;
+    transform: scale(0.9);
 }
 
 .auth-form {
-    background: linear-gradient(135deg, var(--light-background), var(--gray-background));
+    background: linear-gradient(135deg, var(--light-background), #141727);
     border-radius: 20px;
     display: flex;
     width: 90%;
@@ -217,7 +218,7 @@ input::placeholder{
   display: flex;
   align-items: center;
   position: relative;
-  padding-left: 30px;
+  padding-left: 10px;
   cursor: pointer;
   font-size: 14px;
   user-select: none;
@@ -239,7 +240,7 @@ input::placeholder{
 
 .checkmark {
   position: absolute;
-  left: 0;
+  left: -12px;
   height: 18px;
   width: 18px;
   background-color: transparent;

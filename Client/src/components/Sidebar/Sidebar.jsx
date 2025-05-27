@@ -1,5 +1,5 @@
 // Icons
-import { LuGamepad } from "react-icons/lu";
+import { LuCoins, LuGamepad, LuHeart, LuHouse, LuInfo, LuLayoutDashboard, LuShoppingBag, LuShoppingCart, LuUserRoundSearch } from "react-icons/lu";
 import { RiHomeSmile2Line } from "react-icons/ri";
 import { RiTeamLine } from "react-icons/ri";
 import { RiShoppingCartLine } from "react-icons/ri";
@@ -14,62 +14,57 @@ import { Link } from "react-router-dom";
 const Sidebar = () => {
   const tabs = [
     {
-      icon: <RiHomeSmile2Line size={20} color="snow" strokeWidth="0.1" />,
+      icon: <LuHouse size={17} color="snow" strokeWidth="1.5" />,
       text: "Inicio",
       redirection: "/",
     },
     {
-      icon: <LuGamepad size={20} color="snow" strokeWidth="1.8" />,
+      icon: <LuGamepad size={17} color="snow" strokeWidth="2" />,
       text: "Juegos",
       redirection: "/games",
     },
     {
-      icon: <BiCategoryAlt size={20} color="snow" strokeWidth="0.01" />,
+      icon: <BiCategoryAlt size={17} color="snow" strokeWidth="0.1" />,
       text: "Categorias",
       redirection: "/categories",
     },
     {
-      icon: <RiTeamLine size={20} color="snow" strokeWidth="0.01" />,
+      icon: <RiTeamLine size={17} color="snow" strokeWidth="0.01" />,
       text: "Desarrolladoras",
       redirection: "/developers",
     },
     {
-      icon: <RiShoppingCartLine size={20} color="snow" strokeWidth="0.01" />,
+      icon: <LuShoppingCart size={17} color="snow" strokeWidth="1.5" />,
       text: "Carrito",
       redirection: "/cart",
     },
     {
-      icon: <FaRegUser size={20} color="snow" strokeWidth="0.01" />,
-      text: "Perfil",
-      redirection: "/profile",
-    },
-    {
-      icon: <FaRegUser size={20} color="snow" strokeWidth="0.01" />,
+      icon: <LuUserRoundSearch size={17} color="snow" strokeWidth="1.5" />,
       text: "Perfiles",
       redirection: "/profiles",
     },
     {
-      icon: <FaRegHeart size={20} color="snow" strokeWidth="0.01" />,
+      icon: <LuHeart size={17} color="snow" strokeWidth="1.5" />,
       text: "Favoritos",
       redirection: "/favorites",
     },
     {
-      icon: <MdInfoOutline size={20} color="snow" strokeWidth="0.01" />,
+      icon: <LuShoppingBag size={17} color="snow" strokeWidth="1.5" />,
       text: "Marketplace",
       redirection: "/marketplace",
     },
     {
-      icon: <MdInfoOutline size={20} color="snow" strokeWidth="0.01" />,
+      icon: <LuCoins size={17} color="snow" strokeWidth="1.5" />,
       text: "XCoins",
       redirection: "/xcoins",
     },
     {
-      icon: <MdInfoOutline size={20} color="snow" strokeWidth="0.01" />,
+      icon: <LuInfo size={17} color="snow" strokeWidth="1.5" />,
       text: "Sobre Nosotros",
       redirection: "/about",
     },
     {
-      icon: <MdInfoOutline size={20} color="snow" strokeWidth="0.01" />,
+      icon: <LuLayoutDashboard size={18} color="snow" strokeWidth="1.5" />,
       text: "Admin",
       redirection: "/admin",
     },

@@ -5,6 +5,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    
+    background: linear-gradient(135deg, #0f121f, #141727);
     justify-content: space-between;
     padding-top: 10px;
 }
@@ -21,13 +23,14 @@
     padding: 16px 10px;
     cursor: pointer;
     transition: ease-in-out .2s;
-    border-radius: 16px;
+    border-radius: 12px;
     border: transparent solid 1px; 
     text-decoration: none;
 }
 .tab-button:hover{
-    border: var(--secondary-text) solid 1px; 
-    background-color: #0a0a13;
+    border: var(--border) solid 1px; 
+    
+    background-color: #111724;
 }
 .tab-text{
     font-size: 0.7rem;

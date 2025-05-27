@@ -1,15 +1,19 @@
-.game-card {
+.game-card-comp {
   
-background: linear-gradient(135deg, var(--gray-background), var(--light-background));
+  background: linear-gradient(135deg, var(--light-background), #141727);
   border-radius: 8px;
   overflow: hidden;
   width: 100%;
-  max-width: 300px;
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   transition: transform 0.2s ease;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  padding-bottom: 0px !important;
 }
 
-.game-card:hover {
+.game-card-comp:hover {
   transform: translateY(-2px);
 }
 
@@ -107,4 +111,5 @@ background: linear-gradient(135deg, var(--gray-background), var(--light-backgrou
 .game-bottom {
     display: flex;
     justify-content: space-between;
+    transform: translateY(50%);
 }

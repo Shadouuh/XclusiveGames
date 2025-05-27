@@ -16,15 +16,16 @@ import Developer from './pages/DeveloperPage/Page.jsx';
 import Devs from './pages/DevsPage/Page.jsx';
 import Favorites from './pages/FavoritesPage/Page.jsx';
 import Game from './pages/GamePage/Page.jsx';
-import Users from './pages/UserPage/Page.jsx';
-import Profile from './pages/ProfilePage/Page.jsx';
 import MarketPage from "./pages/MarketPage/Page.jsx";
 import XCoinsPage from "./pages/XcoinsPage/Page.jsx";
 import AdminPage from "./pages/AdminPage/Page.jsx";
 import AdminLayout from "./pages/AdminPage/AdminLayout.jsx";
 import GamesManagement from "./pages/AdminPage/GamesManagement.jsx";
+import ProfilesPage from "./pages/ProfilePage/Page.jsx";
+import ProfileDetailPage from "./pages/UserPage/Page.jsx";
 // Layout
 import Layout from './Layout.jsx';
+
 const App = () => {
   return (
     <Router>
@@ -57,7 +58,7 @@ const App = () => {
           <Route path="/categories" element={<Categories />} />
           <Route path="/developers" element={<Devs />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/profiles" element={<Users />} />
+          <Route path="/profiles" element={<ProfilesPage />} />
           <Route path="/favorites" element={<Favorites />} />
           <Route path="/marketplace" element={<MarketPage />} />
           <Route path="/xcoins" element={<XCoinsPage />} />
@@ -68,7 +69,7 @@ const App = () => {
           {/* Ruta de Juego por ID */}
           <Route path="/game/:id" element={<Game />} />
           {/* Ruta de perfil por ID */}
-          <Route path="profile/:id" element={<Profile />} />
+          <Route path="profile/:username" element={<ProfileDetailPage />} />
 
         </Route>
       </Routes>

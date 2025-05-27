@@ -1,0 +1,118 @@
+.review-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeInOverlay 0.3s ease forwards;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.review-modal-youtube {
+  background: #1a1a1a;
+  width: 90%;
+  max-width: 400px;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 0 15px rgba(39, 39, 42, 0.6);
+  text-align: center;
+  font-family: sans-serif;
+}
+
+.review-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.review-modal-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.review-close-button {
+  font-size: 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+}
+
+.review-share-icons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.review-icon-btn {
+  font-size: 24px;
+  background: #232324;
+  border: none;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.review-icon-btn:hover {
+  background: #1d1d1d;
+  box-shadow: 0 0 5px #27272a;
+}
+
+.review-copy-link-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.review-copy-input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #27272a;
+  border-radius: 8px;
+  color: #f2f2f2;
+  font-size: 14px;
+  background: #1a1a1b;
+}
+
+.review-copy-btn {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 8px;
+  background: #8b5cf6;
+  color: #fafafa;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.review-copy-btn:hover {
+  background: #7c3aed;
+  box-shadow: 0 0 5px #27272a;
+}
+
+@keyframes modalFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes fadeInOverlay {
+  to {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

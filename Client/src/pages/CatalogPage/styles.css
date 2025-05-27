@@ -13,7 +13,7 @@
   
   .catalog-filters {
     margin-bottom: 30px;
-    background: linear-gradient(135deg, var(--light-background),var(--background));
+    background: linear-gradient(135deg, var(--light-background), #141727);
     border: solid 1px var(--border);
     border-radius: 8px;
     padding: 20px;
@@ -150,7 +150,7 @@
   .no-games {
     text-align: center;
     padding: 40px;
-    background-color: var(--gray-background);
+    background: linear-gradient(135deg, var(--light-background), #141727);
     border-radius: 14px;
     font-size: 1rem;
     font-weight: 400;

@@ -1,0 +1,223 @@
+.review-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeInOverlay 0.3s ease forwards;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-comment-review-post {
+  position: relative;
+  width: 600px;
+  max-width: 90%;
+  padding: 16px;
+  background-color: #1a1a1b;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  
+}
+
+.modal-comment-review-avatar {
+  width: 48px;
+  height: 48px;
+  margin-right: 12px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.modal-comment-review-post-body {
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.modal-comment-review-comment-header {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.modal-comment-review-name {
+  font-weight: bold;
+  color: #fafafa;
+}
+
+.modal-comment-review-username {
+  color: #646464;
+  font-size: 14px;
+}
+
+.modal-review-text {
+  font-size: 16px;
+  margin: 8px 0;
+  color: #d1d5db;
+  
+}
+
+.modal-comment-review-post-image {
+  width: 100%;
+  border-radius: 12px;
+  margin-top: 8px;
+}
+
+.modal-comment-review-close-button {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 20px;
+  color: #657786;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.modal-comment-review-game-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0;
+  padding: 8px;
+  color: #f8fafc;
+  background-color: #232324;
+  border-radius: 8px;
+  
+}
+
+.modal-comment-review-game-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.modal-comment-review-comment-form {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-top: 16px;
+}
+
+.modal-comment-review-comment-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.modal-comment-review-comment-box {
+  padding: 12px;
+  margin-top: 12px;
+  background-color: #232324;
+  border-radius: 12px;
+  transition: all 200ms ease-in;
+  animation: fadeIn 0.8s ease-out;
+  animation-delay: 0.3s;
+  animation-fill-mode: both;
+}
+
+.modal-comment-review-comment-box:hover{
+  border-color: #8b5cf6;
+  box-shadow: 0 0 8px rgba(124, 58, 237,0.5);
+  transform: translateY(-2px);
+}
+
+.modal-comment-review-comment-box::before{
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(to right, #8a4fff, #5d82b3);
+  transition: width 0.4s ease;
+}
+
+.modal-comment-review-comment-box:focus-within::before{width: 100%;}
+
+.modal-comment-review-comment-box:focus-within{
+  border-color: #8b5cf6;
+  box-shadow: 0 0 8px rgba(124, 58, 237,0.6);
+  transform: translateY(-2px);
+}
+
+.modal-comment-review-comment-tools {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.modal-comment-review-tools-left {
+  display: flex;
+  gap: 6px;
+}
+
+.modal-comment-review-icon-button {
+  display: flex;
+  align-items: center;
+  padding: 6px;
+  color: #8b5cf6;
+  background: none;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.modal-comment-review-icon-button:hover {
+  background-color: rgba(124, 58, 237,0.2);
+  box-shadow: 0 0 5px #27272a;
+}
+
+.modal-comment-review-hidden-input {
+  flex: 1;
+  padding: 6px 8px;
+  font-size: 15px;
+  font-family: inherit;
+  color: #d1d5db;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.modal-comment-review-send-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background-color: #8b5cf6;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.modal-comment-review-send-button:hover {
+  background-color: #7c3aed;
+  box-shadow: 0 0 5px #8b5cf6;
+}
+
+@keyframes modalFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes fadeInOverlay {
+  to {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

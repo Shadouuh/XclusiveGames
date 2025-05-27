@@ -36,9 +36,10 @@ input:autofill {
     font-family: "Montserrat";
   }
   body {
-    background-color: var(--background);
+    background-color: var(--light-background);
     max-height: 100vh;
     width: 100%;
+    
   }
   main {
     display: flex;
@@ -62,10 +63,10 @@ input:autofill {
     background: #1f2937;
   }
   .router::-webkit-scrollbar-thumb {
-    background: #a64ac9;
+    background: linear-gradient(135deg, var(--light-background), #141727);
   }
   .router::-webkit-scrollbar-thumb:hover {
-    background: #8b2db1;
+    background: linear-gradient(135deg, var(--light-background), #141727);
   }
   h2, h3, h4, h5, h6, p{
     color: var(--primary-text);
