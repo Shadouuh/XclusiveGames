@@ -32,7 +32,7 @@ router.post('/login', async (req, res) => {
             },
             secretKey,
             //tiempo de expiracion, pongo 1h pero despues vemos 
-            { expiresIn: '1h' }
+            { expiresIn: '24h' }
         );
 
         //Enviamos el token como cookie 

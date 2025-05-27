@@ -84,7 +84,7 @@ router.get('/all', async (req, res) => {
 
         }
 
-        res.status(200).json(games);
+        res.status(200).json({games});
 
     } catch (err) {
         return handleError(res, 'Error al obtener los juegos', err);

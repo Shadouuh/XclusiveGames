@@ -1,6 +1,11 @@
 import './styles.css'
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+
+
+// IMPORTAR AXIOS DE SU CONFIGURACION NO DEL NODE_MODULES
+import axios from '../../api/axios';
+
+
 import { getReviewsByGameId, getAverageRating } from '../../exampleData/gameReviewsData.js';
 import { LuShoppingCart, LuStar } from 'react-icons/lu';
 import useNotification from '../../hooks/useNotification.jsx';
@@ -25,23 +30,19 @@ const GameCard = ({id, name, image, platform, price}) => {
             notify('Debes iniciar sesión para agregar al carrito', 'error');
             return;
         }
-    
-        if (!id) {
-            notify('ID del juego no encontrado', 'error');
-            return;
-        }
 
         setIsLoading(true);
         try {
-            const response = await axios.post('http://localhost:5001/cart/add', {
-                id_game: id,
-                quantity: 1
-            }, {
-                withCredentials: true // Para enviar las cookies con la petición
+            const response = await axios.post('/cart/add/' + id, {
+                quantity: 1,
+                id_login: JSON.parse(userLocal).id_login
             });
+            
             console.log('Respuesta del servidor:', response.data);
 
-            notify('Juego agregado al carrito', 'success');
+            if(response.status == 200 || response.status == 201) {
+                notify(response.data.message, 'success');
+            }
         } catch (error) {
             console.error('Error al agregar al carrito:', error);
             notify('Error al agregar al carrito', 'error');

@@ -6,7 +6,7 @@ function verificarToken(req, res, next) {
   // Buscar la galletita
   const token = req.cookies.token;
 
-  if (!token) handleError(res, 'No se encontró el token', null, 401);
+  if (!token) return handleError(res, 'No se encontró el token', null, 401);
 
   //Verificar que el token no haya expirado con jwt.verify
   try {
