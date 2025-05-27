@@ -52,7 +52,7 @@ const AuthPage = () => {
 
     if (formData.password !== formData.confirmPassword) {
       notify("Las contraseñas no coinciden", "error");
-      return;x
+      return;
     }
 
     try {

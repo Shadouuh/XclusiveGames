@@ -7,7 +7,7 @@ let conex;
 const init = async () => conex = await createConnection();
 init();
 
-router.post('/createGame', verificarToken, async (req, res) => {
+router.post('/create', verificarToken, async (req, res) => {
 
     const { name, price, description, release_date, stock, genres, platforms } = req.body;
 
@@ -55,7 +55,7 @@ router.post('/createGame', verificarToken, async (req, res) => {
 
 });
 
-router.get('/', async (req, res) => {
+router.get('/all', async (req, res) => {
 
     try {
 
@@ -84,13 +84,10 @@ router.get('/', async (req, res) => {
 
         }
 
-        res.json(games);
+        res.status(200).json(games);
 
     } catch (err) {
-
-        console.error(err);
-        res.status(500).json({ message: 'Error al obtener los juegos', err });
-
+        return handleError(res, 'Error al obtener los juegos', err);
     }
 
 });
@@ -131,10 +128,7 @@ router.put('/updateGame/:id', async (req, res) => {
         })
 
     } catch (err) {
-
-        console.error(err);
-        res.status(500).json({ message: "Error al actualizar juego", err});
-
+        return handleError(res, 'Error al actualizar el juego', err);
     }
 
 });
@@ -153,10 +147,7 @@ router.delete('/deleteGame/:id', async (req, res) => {
         });
 
     } catch (err) {
-
-        console.error(err);
-        res.status(500).json({ message: "Error al eliminar juego", err});
-
+        return handleError(res, 'Error al eliminar el juego', err);
     }
 
 });
