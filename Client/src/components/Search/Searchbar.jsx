@@ -2,7 +2,12 @@
 import "./searchbar.css";
 // Icons
 import { CiSearch } from "react-icons/ci";
-const Searchbar = () => {
+
+const Searchbar = ({ searchTerm, setSearchTerm }) => {
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
   return (
     <div className="searchbar">
       <button className="search-button">
@@ -12,8 +17,11 @@ const Searchbar = () => {
         className="search-bar-input"
         type="text"
         placeholder="Buscar Juegos..."
+        value={searchTerm}
+        onChange={handleSearch}
       />
     </div>
   );
 };
+
 export default Searchbar;

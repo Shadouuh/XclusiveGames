@@ -66,6 +66,42 @@ router.post('/create', async (req, res) => {
 
 });
 
+router.get('/getById/:id', async (req, res) => {
+    const gameId = req.params.id;
+
+    try {
+        const [game] = await conex.query('SELECT * FROM games WHERE id_game = ? AND deleted_at IS NULL', [gameId]);
+
+        if (game.length == 0) return handleError(res, 'No se encontro el juego', null, 404);
+
+        console.log(game);
+
+        const gameData = game[0];
+
+        console.log(gameData);
+
+        const [genres] = await conex.query(`
+            SELECT g.name FROM genres g
+            JOIN games_genres gg ON g.id_genre = gg.id_genre WHERE gg.id_game = ? `,
+            [gameData.id_game]
+        );
+
+        gameData.genres = genres.map(g => g.name);
+
+        const [platforms] = await conex.query(`
+            SELECT p.name FROM platforms p
+            JOIN games_platforms gp ON p.id_platform = gp.id_platform WHERE gp.id_game = ?`,
+            [gameData.id_game]
+        );
+
+        gameData.platforms = platforms.map(p => p.name);
+
+        res.status(200).json({ game: gameData });
+    } catch (err) {
+        return handleError(res, 'Error al obtener el juego', err);
+    }
+})
+
 router.get('/all', async (req, res) => {
 
     try {
@@ -91,7 +127,11 @@ router.get('/all', async (req, res) => {
 
         }
 
+
+        res.status(200).json({ games });
+
         res.status(200).json({games});
+
 
     } catch (err) {
         return handleError(res, 'Error al obtener los juegos', err);
@@ -192,14 +232,14 @@ router.put('/updateGame/:id', async (req, res) => {
         for (let genre of genres) {
 
             await conex.query('INSERT INTO games_genres (id_game, id_genre) VALUES (?, ?)',
-            [gameId, genre]);
+                [gameId, genre]);
 
         }
 
         for (let platform of platforms) {
 
             await conex.query('INSERT INTO games_platforms (id_game, id_platform) VALUES (?, ?)',
-            [gameId, platform]);
+                [gameId, platform]);
 
         }
 

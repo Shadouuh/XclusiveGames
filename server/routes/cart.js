@@ -8,9 +8,10 @@ const init = async () => conex = await createConnection();
 init();
 
 // Obtener el carrito del usuario
-router.get('/', verificarToken, async (req, res) => {
+router.get('/getById/:id_login', verificarToken, async (req, res) => {
+    const userId = req.params.id_login;
+
     try {
-        const userId = req.user.id_login;
         
         // Primero obtenemos el id_user a partir del id_login
         const [userResult] = await conex.execute(
@@ -18,38 +19,56 @@ router.get('/', verificarToken, async (req, res) => {
             [userId]
         );
         
-        if (userResult.length === 0) {
-            return handleError(res, 'Usuario no encontrado', null, 404);
-        }
+        if (userResult.length === 0) return handleError(res, 'Usuario no encontrado', null, 404);
         
         const id_user = userResult[0].id_user;
         
         // Obtenemos los items del carrito con información de los juegos
         const [cartItems] = await conex.execute(
             `SELECT c.id_cart, c.id_user, c.id_game, c.quantity, c.added_at, 
-                    g.name, g.price, g.plataform, g.genre, g.description, g.image
+                    g.name, g.price, g.description, g.release_date, g.stock, g.status
              FROM cart c
              JOIN games g ON c.id_game = g.id_game
              WHERE c.id_user = ?`,
             [id_user]
         );
         
-        res.status(200).json(cartItems);
+        // Obtenemos los géneros y plataformas para cada juego
+        for (let item of cartItems) {
+            // Obtener géneros
+            const [genres] = await conex.execute(
+                `SELECT g.name FROM genres g
+                 JOIN games_genres gg ON g.id_genre = gg.id_genre 
+                 WHERE gg.id_game = ?`,
+                [item.id_game]
+            );
+            item.genres = genres.map(g => g.name);
+            
+            // Obtener plataformas
+            const [platforms] = await conex.execute(
+                `SELECT p.name FROM platforms p
+                 JOIN games_platforms gp ON p.id_platform = gp.id_platform 
+                 WHERE gp.id_game = ?`,
+                [item.id_game]
+            );
+            item.platforms = platforms.map(p => p.name);
+        }
+        res.status(200).json({cartItems});
     } catch (err) {
         return handleError(res, 'Error al obtener el carrito', err);
     }
 });
 
 // Agregar un juego al carrito
-router.post('/add', verificarToken, async (req, res) => {
-    const { id_game, quantity = 1 } = req.body;
-    
-    if (!id_game) {
-        return handleError(res, 'El ID del juego es requerido', null, 400);
-    }
+router.post('/add/:id_game', verificarToken, async (req, res) => {
+    const { quantity = quantity || 1 } = req.body;
+    const { id_game } = req.params;
+    const userId = req.body.id_login; 
     
     try {
-        const userId = req.user.id_login;
+
+        console.log('Body: ', req.body);
+        console.log('Params: ', req.params);
         
         // Primero obtenemos el id_user a partir del id_login
         const [userResult] = await conex.execute(
@@ -57,9 +76,7 @@ router.post('/add', verificarToken, async (req, res) => {
             [userId]
         );
         
-        if (userResult.length === 0) {
-            return handleError(res, 'Usuario no encontrado', null, 404);
-        }
+        if (userResult.length === 0) return handleError(res, 'Usuario no encontrado', null, 404);
         
         const id_user = userResult[0].id_user;
         
@@ -69,9 +86,7 @@ router.post('/add', verificarToken, async (req, res) => {
             [id_game]
         );
         
-        if (gameResult.length === 0) {
-            return handleError(res, 'Juego no encontrado', null, 404);
-        }
+        if (gameResult.length === 0) return handleError(res, 'Juego no encontrado', null, 404);
         
         // Verificamos si el juego ya está en el carrito
         const [cartResult] = await conex.execute(
