@@ -3,7 +3,12 @@ import { Link } from 'react-router-dom';
 import { Games } from '../../exampleData/games.js';
 import GameCard from '../../components/GameCard/GameCard';
 import { LuGamepad, LuGamepad2, LuTablet, LuMonitor, LuLibrary, LuUsers, LuZap } from 'react-icons/lu';
+import { useUser } from '../../hooks/useUser.jsx';
+
 const Home = () => {
+  // const { user } = useUser();
+  const user = JSON.parse(window.localStorage.getItem("user")) || null;
+
   return (
     <section className="home-container">
       <section className="hero-header">
@@ -15,8 +20,13 @@ const Home = () => {
             Juegos para PlayStation, Nintendo Switch, Xbox y PC en un solo lugar.
           </p>
           <div className="hero-buttons">
-            <Link to="/catalog" className="btn btn-primary">Explorar Juegos</Link>
-            <Link to="/auth" className="btn btn-secondary">Unirse a la Comunidad</Link>
+            <Link to="/games" className="btn btn-primary">Explorar Juegos</Link>
+            { user ?
+              <Link to="/profile" className="btn btn-secondary">Ir a mi Perfil</Link>
+              :
+              <Link to="/auth" className="btn btn-secondary">Unirse a la Comunidad</Link>
+
+            }
           </div>
         </div>
       </section>
@@ -48,28 +58,28 @@ const Home = () => {
         </div>
 
         <div className="consoles-grid">
-          <Link to="/catalog?platform=PlayStation" className="console-card playstation">
+          <Link to="/games?platform=PlayStation" className="console-card playstation">
             <div className="console-icon-wrapper">
               <LuGamepad2 size={42} stroke='snow' strokeWidth={1.5} />
             </div>
             <h3>PlayStation</h3>
           </Link>
 
-          <Link to="/catalog?platform=Xbox" className="console-card xbox">
+          <Link to="/games?platform=Xbox" className="console-card xbox">
             <div className="console-icon-wrapper">
               <LuGamepad size={42} stroke='snow' strokeWidth={1.5} />
             </div>
             <h3>Xbox</h3>
           </Link>
 
-          <Link to="/catalog?platform=Nintendo Switch" className="console-card nintendo">
+          <Link to="/games?platform=Nintendo Switch" className="console-card nintendo">
             <div className="console-icon-wrapper">
               <LuTablet size={42} stroke='snow' strokeWidth={1.5} />
             </div>
             <h3>Nintendo</h3>
           </Link>
 
-          <Link to="/catalog?platform=PC" className="console-card pc">
+          <Link to="/games?platform=PC" className="console-card pc">
             <div className="console-icon-wrapper">
               <LuMonitor size={42} stroke='snow' strokeWidth={1.5} />
             </div>

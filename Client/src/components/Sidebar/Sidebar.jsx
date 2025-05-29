@@ -8,7 +8,7 @@ import { FaRegUser } from "react-icons/fa6";
 import { FaRegHeart } from "react-icons/fa6";
 import { MdInfoOutline } from "react-icons/md";
 // Styles
-import "./Sidebar.css";
+import "./sidebar.css";
 // Components
 import { Link } from "react-router-dom";
 const Sidebar = () => {

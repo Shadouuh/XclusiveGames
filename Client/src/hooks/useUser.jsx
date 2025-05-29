@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import jwt_decode from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode'
+import Cookies from 'js-cookie'
 import useNotification from './useNotification'
 import axios from '../api/axios'
 import { useNavigate } from 'react-router-dom'
@@ -9,22 +10,25 @@ export function useUser() {
     const { notify } = useNotification()
     const navigate = useNavigate()
 
+
     useEffect(() => {
         try {
-            const token = localStorage.getItem('token')
+            // mmm galletitas 
+            const token = Cookies.get('token')
 
             if (!token) {
-                notify('No se encrontro token de verificacion, vuelva a logearse', 'error')
-                navigate('/auth')
+                notify('No se encontró token de verificación, vuelva a loguearse', 'error')
                 setUser(null)
+                navigate('/auth')
                 return
             }
 
-            const decodedToken = jwt_decode(token)
+            const decodedToken = jwtDecode(token)
             const currentTime = Date.now() / 1000
 
+            console.log('Token decodificado:', decodedToken)
+
             if (decodedToken.exp < currentTime) {
-                localStorage.removeItem('token')
                 notify('El token de verificacion se vencio, vuelva a logearse', 'error')
                 navigate('/auth')
                 setUser(null)
@@ -32,9 +36,9 @@ export function useUser() {
             }
 
             const userData = {
-                id: decodedToken.id,
-                username: decodedToken.username,
-                email: decodedToken.email
+                id: decodedToken.id_login, // Cambiar a id_login
+                username: decodedToken.nick, // Cambiar a nick
+                email: decodedToken.email // Este está bien
             }
 
             setUser(userData)
@@ -43,23 +47,19 @@ export function useUser() {
             console.error('Error getting user:', err)
             setUser(null)
         }
-    }, [])
+    }, [notify, navigate]) // Agregar las dependencias
 
     const logout = async () => {
         try {
-            //dudo que esto funcione como tal, no debo enviar otro dato? como credenciales?
             const response = await axios.post('/user/logout')
 
             if (response.status !== 200) return false
 
-            localStorage.removeItem('token')
-            localStorage.removeItem('user')
-            
             setUser(null)
+            Cookies.remove('token')
             notify('Sesión cerrada correctamente', 'success')
-
             navigate('/')
-            
+
             return true
         } catch (error) {
             console.error('Error al cerrar sesión:', error)
@@ -69,4 +69,5 @@ export function useUser() {
     }
 
     return { user, logout }
+
 }

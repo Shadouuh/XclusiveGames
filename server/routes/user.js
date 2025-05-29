@@ -45,6 +45,8 @@ router.post('/login', async (req, res) => {
 
         });
 
+        console.log('Token generado:', token);
+
         res.status(200).send({ message: 'Se logeo correctamente', user: { ...userJwt, password: '[hidden]' }});
     } catch (err) {
         return handleError(res, 'Error al logearse', err);

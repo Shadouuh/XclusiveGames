@@ -95,7 +95,17 @@ VALUES
 ('FIFA 23', 60, 'Simulador de fútbol con equipos actualizados', '2022-09-30', 120, TRUE),
 ('Minecraft', 30, 'Juego de construcción y aventura en un mundo abierto', '2011-11-18', 200, TRUE),
 ('Call of Duty: Modern Warfare', 70, 'Shooter en primera persona con modo multijugador', '2019-10-25', 85, TRUE),
-('Civilization VI', 50, 'Juego de estrategia por turnos', '2016-10-21', 60, TRUE);
+('Civilization VI', 50, 'Juego de estrategia por turnos', '2016-10-21', 60, TRUE),
+('Red Dead Redemption 2', 60, 'Épica aventura en el salvaje oeste', '2018-10-26', 150, TRUE),
+('Resident Evil 4 Remake', 70, 'Remake del clásico juego de terror', '2023-03-24', 100, TRUE),
+('Stardew Valley', 15, 'Simulador de granja y vida rural', '2016-02-26', 200, TRUE),
+('God of War Ragnarök', 70, 'Aventura épica basada en la mitología nórdica', '2022-11-09', 90, TRUE),
+('Portal 2', 20, 'Juego de puzles en primera persona', '2011-04-19', 80, TRUE),
+('Elden Ring', 60, 'RPG de acción en un mundo abierto', '2022-02-25', 120, TRUE),
+('Cities: Skylines', 30, 'Simulador de construcción de ciudades', '2015-03-10', 70, TRUE),
+('Doom Eternal', 40, 'Shooter frenético en primera persona', '2020-03-20', 95, TRUE),
+('Animal Crossing: New Horizons', 60, 'Simulador de vida en una isla', '2020-03-20', 180, TRUE),
+('Hades', 25, 'Roguelike de acción mitológico', '2020-09-17', 110, TRUE);
 
 -- Relacionar juegos con plataformas
 INSERT INTO games_platforms(id_game, id_platform)
@@ -116,7 +126,39 @@ VALUES
 (5, 4), -- Call of Duty en PC
 (6, 4), -- Civilization VI en PC
 (6, 1), -- Civilization VI en Nintendo
-(6, 6); -- Civilization VI en Steam Deck
+(6, 6), -- Civilization VI en Steam Deck
+(7, 2), -- Red Dead Redemption 2 en Xbox
+(7, 3), -- Red Dead Redemption 2 en PlayStation
+(7, 4), -- Red Dead Redemption 2 en PC
+(8, 2), -- Resident Evil 4 en Xbox
+(8, 3), -- Resident Evil 4 en PlayStation
+(8, 4), -- Resident Evil 4 en PC
+(9, 1), -- Stardew Valley en Nintendo
+(9, 2), -- Stardew Valley en Xbox
+(9, 3), -- Stardew Valley en PlayStation
+(9, 4), -- Stardew Valley en PC
+(9, 5), -- Stardew Valley en Mobile
+(10, 2), -- God of War en Xbox
+(10, 3), -- God of War en PlayStation
+(10, 4), -- God of War en PC
+(11, 1), -- Portal 2 en Nintendo
+(11, 2), -- Portal 2 en Xbox
+(11, 3), -- Portal 2 en PlayStation
+(11, 4), -- Portal 2 en PC
+(12, 4), -- Elden Ring en PC
+(12, 1), -- Elden Ring en Nintendo
+(12, 6), -- Elden Ring en Steam Deck
+(13, 4), -- Cities: Skylines en PC
+(13, 1), -- Cities: Skylines en Nintendo
+(13, 6), -- Cities: Skylines en Steam Deck
+(14, 2), -- Doom Eternal en Xbox
+(14, 3), -- Doom Eternal en PlayStation
+(14, 4), -- Doom Eternal en PC
+(15, 4), -- Animal Crossing en PC
+(15, 1), -- Animal Crossing en Nintendo
+(15, 5), -- Animal Crossing en Mobile
+(16, 2), -- Hades en Xbox
+(16, 3); -- Hades en PlayStation
 
 -- Relacionar juegos con géneros
 INSERT INTO games_genres(id_game, id_genre)
@@ -129,7 +171,23 @@ VALUES
 (4, 2), -- Minecraft es Aventura
 (4, 7), -- Minecraft es Simulación
 (5, 4), -- Call of Duty es Acción
-(6, 5); -- Civilization VI es Estrategia
+(6, 5), -- Civilization VI es Estrategia
+(7, 2), -- Red Dead Redemption 2 es Aventura
+(7, 4), -- Red Dead Redemption 2 es Acción
+(8, 1), -- Resident Evil 4 es Terror
+(8, 4), -- Resident Evil 4 es Acción
+(9, 7), -- Stardew Valley es Simulación
+(10, 2), -- God of War es Aventura
+(10, 4), -- God of War es Acción
+(11, 2), -- Portal 2 es Aventura
+(12, 3), -- Elden Ring es RPG
+(12, 4), -- Elden Ring es Acción
+(13, 7), -- Cities: Skylines es Simulación
+(13, 5), -- Cities: Skylines es Estrategia
+(14, 4), -- Doom Eternal es Acción
+(15, 7), -- Animal Crossing es Simulación
+(16, 4), -- Hades es Acción
+(16, 3); -- Hades es RPG
 
 -- Tablas adicionales
 CREATE TABLE pc(

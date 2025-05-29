@@ -28,7 +28,7 @@ const Categories = () => {
       <div className="categories-flex">
         {categories.map(category => (
           <Link 
-            to={`/catalog?genre=${category.name}`} 
+            to={`/games?genre=${category.name}`} 
             key={category.id} 
             className="category-card"
             style={{ '--category-color': category.color }}
