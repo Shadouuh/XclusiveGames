@@ -212,17 +212,17 @@ CREATE TABLE requeriments(
     FOREIGN KEY (id_game) REFERENCES games(id_game) 
  );
 
- --ejemplo de insercion
+ -- ejemplo de insercion
  -- Insertar requerimientos mínimos
 INSERT INTO requeriments (
     id_game, tipo, procesador, memoria, graficos, almacenamiento
 ) VALUES (
-    7, 'minimos', 'Intel Core 2 Duo E5200', '4 GB RAM', 'GeForce 9800GTX+ (1GB)', '9 GB disponibles'
+    2, 'minimos', 'Intel Core 2 Duo E5200', '4 GB RAM', 'GeForce 9800GTX+ (1GB)', '9 GB disponibles'
 );
 
 -- Insertar requerimientos recomendados
 INSERT INTO requeriments (
     id_game, tipo, procesador, memoria, graficos, almacenamiento
 ) VALUES (
-    7, 'recomendados', 'Intel Core i5', '8 GB RAM', 'GeForce GTX 560', '9 GB disponibles'
+    2, 'recomendados', 'Intel Core i5', '8 GB RAM', 'GeForce GTX 560', '9 GB disponibles'
 );
