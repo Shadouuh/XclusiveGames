@@ -9,7 +9,7 @@ init();
 
 router.post('/create', async (req, res) => {
 
-    const { name, price, description, release_date, stock, genres, platforms, requeriments,  minimos, recomendados} = req.body;
+    const { name, price, description, release_date, stock, genres, platforms, minimos, recomendados} = req.body;
 
     try {
 
@@ -233,15 +233,26 @@ router.put('/updateGame/:id', async (req, res) => {
 
             await conex.query('INSERT INTO games_genres (id_game, id_genre) VALUES (?, ?)',
                 [gameId, genre]);
-
         }
 
         for (let platform of platforms) {
 
             await conex.query('INSERT INTO games_platforms (id_game, id_platform) VALUES (?, ?)',
                 [gameId, platform]);
-
         }
+
+        await conex.query('DELETE FROM requeriments WHERE id_game = ?', [gameId]);
+
+        await conex.query(
+            "INSERT INTO requeriments (id_game, tipo, procesador, memoria, graficos, almacenamiento) VALUES (?, 'minimos', ?, ?, ?, ?)",
+            [gameID, minimos.procesador, minimos.memoria, minimos.graficos, minimos.almacenamiento]
+          );
+          
+          await conex.query(
+            "INSERT INTO requeriments (id_game, tipo, procesador, memoria, graficos, almacenamiento) VALUES (?, 'recomendados', ?, ?, ?, ?)",
+            [gameID, recomendados.procesador, recomendados.memoria, recomendados.graficos, recomendados.almacenamiento]
+          );
+
 
         res.status(201).send({
 
