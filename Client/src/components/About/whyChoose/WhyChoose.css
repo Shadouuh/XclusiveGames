@@ -1,0 +1,169 @@
+.why-choose {
+  margin-bottom: 5rem;
+  text-align: center;
+}
+
+.why-choose h2 {
+  margin-bottom: 2rem;
+  font-size: 2em;
+  color: #ffffff;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding: 2em;
+}
+
+.benefit-card {
+  position: relative;
+  padding: 20px;
+  color: #f2f2f2;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.05),
+    rgba(20, 12, 87, 0.05)
+  );
+  border: 1px solid #11112b;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgb(8, 22, 78, 0.4);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.benefit-card.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.benefit-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 2px 12px rgba(13, 31, 107, 0.7);
+}
+
+.benefit-card > *:not(.card-blur) {
+  position: relative;
+  z-index: 1;
+}
+
+.card-blur {
+  position: absolute;
+  width: 20px;
+  height: 100px;
+  filter: blur(30px);
+  opacity: 0.9;
+  z-index: 0;
+}
+
+.card-blur-left,
+.card-blur-right {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.card-blur-center {
+  width: 60px;
+  height: 60px;
+  top: 20px;
+  left: 130px;
+  background: #350c81;
+  border-radius: 50%;
+  filter: blur(10px);
+}
+
+.card-blur-left {
+  top: 0;
+  left: 10px;
+  background: #0b17c0;
+  opacity: 0.3;
+}
+
+.card-blur-right {
+  bottom: 0;
+  right: 10px;
+  background: #9900ff;
+  opacity: 0.3;
+}
+
+.container-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.benefit-icon {
+  display: flex;
+  padding: 15px;
+  margin-bottom: 0.5rem;
+  font-size: 2rem;
+  color: #7700ff;
+  background: rgba(101, 0, 184, 0.1);
+  border-radius: 100%;
+}
+
+.benefit-card h3 {
+  font-size: 1.25rem;
+  color: #fafafa;
+  margin-bottom: 0.5rem;
+}
+
+.benefit-card p {
+  font-size: 1rem;
+  color: #d1d1d1;
+}
+
+.fade-up {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.6s forwards ease-out;
+}
+
+.slide-in-left {
+  opacity: 0;
+  transform: translateX(-30px);
+  animation: slideInLeft 0.7s forwards ease-out;
+}
+
+.benefit-card.in-view .benefit-icon {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeSlideUp 0.4s forwards;
+  animation-delay: 0.2s;
+}
+
+.benefit-card.in-view h3 {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeSlideUp 0.4s forwards;
+  animation-delay: 0.4s;
+}
+
+.benefit-card.in-view p {
+  opacity: 0;
+  transform: translateY(15px);
+  animation: fadeSlideUp 0.4s forwards;
+  animation-delay: 0.6s;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes fadeSlideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
