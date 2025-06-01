@@ -79,6 +79,25 @@ CREATE TABLE games_genres(
     ON UPDATE CASCADE
 );
 
+-- Crear tabla de relación entre juegos y desarrolladoras
+CREATE TABLE games_developers(
+    id_dev INT AUTO_INCREMENT PRIMARY KEY,
+    id_game INT,
+    name VARCHAR(100),
+    FOREIGN KEY (id_game) REFERENCES games(id_game)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+CREATE TABLE games_imgs(
+    id_img INT PRIMARY KEY AUTO_INCREMENT,
+    id_game INT,
+    url VARCHAR(255),
+    FOREIGN KEY (id_game) REFERENCES games(id_game)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
 -- Insertar géneros (todos juntos)
 INSERT INTO genres(name)
 VALUES('Terror'), ('Aventura'), ('RPG'), ('Acción'), ('Estrategia'), ('Deportes'), ('Simulación');
@@ -106,6 +125,44 @@ VALUES
 ('Doom Eternal', 40, 'Shooter frenético en primera persona', '2020-03-20', 95, TRUE),
 ('Animal Crossing: New Horizons', 60, 'Simulador de vida en una isla', '2020-03-20', 180, TRUE),
 ('Hades', 25, 'Roguelike de acción mitológico', '2020-09-17', 110, TRUE);
+
+-- Insertar desarrolladoras y relacionarlas con juegos
+INSERT INTO games_developers(id_game, name) VALUES
+(1, 'Re-Logic'),                  -- Terraria
+(2, 'CD Projekt Red'),            -- The Witcher 3
+(3, 'EA Sports'),                 -- FIFA 23
+(4, 'Mojang Studios'),            -- Minecraft
+(5, 'Infinity Ward'),             -- Call of Duty: Modern Warfare
+(6, 'Firaxis Games'),             -- Civilization VI
+(7, 'Rockstar Games'),            -- Red Dead Redemption 2
+(8, 'Capcom'),                    -- Resident Evil 4 Remake
+(9, 'ConcernedApe'),              -- Stardew Valley
+(10, 'Santa Monica Studio'),      -- God of War Ragnarök
+(11, 'Valve'),                    -- Portal 2
+(12, 'FromSoftware'),             -- Elden Ring
+(13, 'Colossal Order'),           -- Cities: Skylines
+(14, 'id Software'),              -- Doom Eternal
+(15, 'Nintendo'),                 -- Animal Crossing: New Horizons
+(16, 'Supergiant Games');         -- Hades
+
+-- Insertar URLs de imágenes para los juegos
+INSERT INTO games_imgs(id_game, url) VALUES
+(1, 'https://cdn.akamai.steamstatic.com/steam/apps/105600/header.jpg'),                -- Terraria
+(2, 'https://cdn.akamai.steamstatic.com/steam/apps/292030/header.jpg'),                -- The Witcher 3
+(3, 'https://image.api.playstation.com/vulcan/ap/rnd/202207/0515/BOwvC0Q9dfw4g8eJXnD6YYj8.png'), -- FIFA 23
+(4, 'https://cdn.akamai.steamstatic.com/steam/apps/1938650/header.jpg'),               -- Minecraft
+(5, 'https://cdn.akamai.steamstatic.com/steam/apps/1938090/header.jpg'),               -- Call of Duty: Modern Warfare
+(6, 'https://cdn.akamai.steamstatic.com/steam/apps/289070/header.jpg'),                -- Civilization VI
+(7, 'https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg'),               -- Red Dead Redemption 2
+(8, 'https://cdn.akamai.steamstatic.com/steam/apps/2050650/header.jpg'),               -- Resident Evil 4 Remake
+(9, 'https://cdn.akamai.steamstatic.com/steam/apps/413150/header.jpg'),                -- Stardew Valley
+(10, 'https://image.api.playstation.com/vulcan/ap/rnd/202207/1210/4xJ8XB3bi888QTLZYdl7Oi0s.png'), -- God of War Ragnarök
+(11, 'https://cdn.akamai.steamstatic.com/steam/apps/620/header.jpg'),                  -- Portal 2
+(12, 'https://cdn.akamai.steamstatic.com/steam/apps/1245620/header.jpg'),              -- Elden Ring
+(13, 'https://cdn.akamai.steamstatic.com/steam/apps/255710/header.jpg'),               -- Cities: Skylines
+(14, 'https://cdn.akamai.steamstatic.com/steam/apps/782330/header.jpg'),               -- Doom Eternal
+(15, 'https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/ncom/software/switch/70010000027619/9989957eae3a6b545194c42fec2071675c34aadacd65e6b33fdfe7b3b6a86c3a'), -- Animal Crossing: New Horizons
+(16, 'https://cdn.akamai.steamstatic.com/steam/apps/1145360/header.jpg');              -- Hades
 
 -- Relacionar juegos con plataformas
 INSERT INTO games_platforms(id_game, id_platform)
@@ -256,8 +313,18 @@ CREATE TABLE transaction_details (
     ON UPDATE CASCADE
 );
 
-CREATE TABLE review(
-    id_review INT PRIMARY KEY AUTO_INCREMENT
+CREATE TABLE reviews(
+    id_review INT PRIMARY KEY AUTO_INCREMENT,
+    id_game INT,
+    id_login INT,
+    review TEXT,
+    score float,
+    FOREIGN KEY (id_game) REFERENCES games(id_game)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+    FOREIGN KEY (id_login) REFERENCES login(id_login)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
 );
 
 CREATE TABLE requeriments( 
@@ -267,7 +334,9 @@ CREATE TABLE requeriments(
     memoria VARCHAR(255),
     graficos VARCHAR(255), 
     almacenamiento VARCHAR(255), 
-    FOREIGN KEY (id_game) REFERENCES games(id_game) 
+    FOREIGN KEY (id_game) REFERENCES games(id_game)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
  );
 
  -- ejemplo de insercion
