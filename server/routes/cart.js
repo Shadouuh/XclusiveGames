@@ -1,4 +1,3 @@
-const { verificarToken } = require('../middlewares/auth');
 const { createConnection, handleError, express } = require('./../config/setup');
 const router = express.Router();
 
@@ -8,7 +7,7 @@ const init = async () => conex = await createConnection();
 init();
 
 // Obtener el carrito del usuario
-router.get('/getById/:id_login', verificarToken, async (req, res) => {
+router.get('/getById/:id_login', async (req, res) => {
     const userId = req.params.id_login;
 
     try {
@@ -60,7 +59,7 @@ router.get('/getById/:id_login', verificarToken, async (req, res) => {
 });
 
 // Agregar un juego al carrito
-router.post('/add/:id_game', verificarToken, async (req, res) => {
+router.post('/add/:id_game', async (req, res) => {
     const { quantity = quantity || 1 } = req.body;
     const { id_game } = req.params;
     const userId = req.body.id_login; 
@@ -127,7 +126,7 @@ router.post('/add/:id_game', verificarToken, async (req, res) => {
 });
 
 // Actualizar cantidad de un juego en el carrito
-router.put('/update/:id_cart', verificarToken, async (req, res) => {
+router.put('/update/:id_cart', async (req, res) => {
     const { id_cart } = req.params;
     const { quantity } = req.body;
     
@@ -177,7 +176,7 @@ router.put('/update/:id_cart', verificarToken, async (req, res) => {
 });
 
 // Eliminar un juego del carrito
-router.delete('/remove/:id_cart', verificarToken, async (req, res) => {
+router.delete('/remove/:id_cart', async (req, res) => {
     const { id_cart } = req.params;
     
     try {
@@ -221,7 +220,7 @@ router.delete('/remove/:id_cart', verificarToken, async (req, res) => {
 });
 
 // Vaciar el carrito
-router.delete('/clear', verificarToken, async (req, res) => {
+router.delete('/clear', async (req, res) => {
     try {
         const userId = req.user.id_login;
         
