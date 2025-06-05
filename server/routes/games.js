@@ -24,7 +24,7 @@ router.post('/create', upload.single('file'), async (req, res) => {
         if (req.file) {
             const result = await uploadToCloudinary(req.file.buffer, 'img_games');
             imgUrl = result.secure_url;
-        }  
+        }
 
         const query = `INSERT INTO games (name, price, description, release_date, stock, status) VALUES (?, ?, ?, ?, ?, ?)`;
 
@@ -67,7 +67,8 @@ router.post('/create', upload.single('file'), async (req, res) => {
         res.status(201).send({
 
             message: "Juego creado correctamente",
-            gameID: resultGame.insertId
+            gameID: resultGame.insertId,
+            imageUrl: imgUrl
 
         });
 
@@ -116,8 +117,20 @@ router.get('/getById/:id', async (req, res) => {
 
         gameData.platforms = platforms.map(p => p.name);
 
+       
+        const [images] = await conex.query(`
+            SELECT url FROM games_imgs
+            WHERE id_game = ?
+        `, [gameData.id_game]);
+
+        gameData.images = images.map(img => img.url);
+
+        gameData.mainImage = gameData.images.length > 0 ? gameData.images[0] : null;
+
         res.status(200).json({ game: gameData });
+
     } catch (err) {
+
         return handleError(res, 'Error al obtener el juego', err);
     }
 })
@@ -145,10 +158,14 @@ router.get('/all', async (req, res) => {
 
             game.platforms = platforms.map(p => p.name);
 
+            const [images] = await conex.query(`
+                SELECT url FROM games_imgs WHERE id_game = ? LIMIT 1`,
+                [game.id_game]
+            );
+
+            game.image = images.length > 0 ? images[0].url : null;
+
         }
-
-
-        res.status(200).json({ games });
 
         res.status(200).json({ games });
 
