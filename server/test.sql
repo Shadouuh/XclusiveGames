@@ -109,60 +109,60 @@ VALUES('Nintendo'), ('Xbox'), ('PlayStation'), ('PC'), ('Mobile'), ('Steam Deck'
 -- Insertar juegos
 INSERT INTO games(name, price, description, release_date, stock, status)
 VALUES
-('Terraria', 20, 'Juego de aventura y construcción', '2011-05-16', 100, TRUE),
-('The Witcher 3', 40, 'Un RPG de mundo abierto con una historia inmersiva', '2015-05-19', 75, TRUE),
-('FIFA 23', 60, 'Simulador de fútbol con equipos actualizados', '2022-09-30', 120, TRUE),
-('Minecraft', 30, 'Juego de construcción y aventura en un mundo abierto', '2011-11-18', 200, TRUE),
-('Call of Duty: Modern Warfare', 70, 'Shooter en primera persona con modo multijugador', '2019-10-25', 85, TRUE),
-('Civilization VI', 50, 'Juego de estrategia por turnos', '2016-10-21', 60, TRUE),
-('Red Dead Redemption 2', 60, 'Épica aventura en el salvaje oeste', '2018-10-26', 150, TRUE),
-('Resident Evil 4 Remake', 70, 'Remake del clásico juego de terror', '2023-03-24', 100, TRUE),
-('Stardew Valley', 15, 'Simulador de granja y vida rural', '2016-02-26', 200, TRUE),
-('God of War Ragnarök', 70, 'Aventura épica basada en la mitología nórdica', '2022-11-09', 90, TRUE),
-('Portal 2', 20, 'Juego de puzles en primera persona', '2011-04-19', 80, TRUE),
-('Elden Ring', 60, 'RPG de acción en un mundo abierto', '2022-02-25', 120, TRUE),
-('Cities: Skylines', 30, 'Simulador de construcción de ciudades', '2015-03-10', 70, TRUE),
-('Doom Eternal', 40, 'Shooter frenético en primera persona', '2020-03-20', 95, TRUE),
-('Animal Crossing: New Horizons', 60, 'Simulador de vida en una isla', '2020-03-20', 180, TRUE),
-('Hades', 25, 'Roguelike de acción mitológico', '2020-09-17', 110, TRUE);
+('Terraria', 20000, 'Juego de aventura y construcción', '2011-05-16', 100, TRUE),
+('The Witcher 3', 40000, 'Un RPG de mundo abierto con una historia inmersiva', '2015-05-19', 75, TRUE),
+('FIFA 23', 60000, 'Simulador de fútbol con equipos actualizados', '2022-09-30', 120, TRUE),
+('Minecraft', 30000, 'Juego de construcción y aventura en un mundo abierto', '2011-11-18', 200, TRUE),
+('Call of Duty: Modern Warfare', 70000, 'Shooter en primera persona con modo multijugador', '2019-10-25', 85, TRUE),
+('Civilization VI', 50000, 'Juego de estrategia por turnos', '2016-10-21', 60, TRUE),
+('Red Dead Redemption 2', 60000, 'Épica aventura en el salvaje oeste', '2018-10-26', 150, TRUE),
+('Resident Evil 4 Remake', 70000, 'Remake del clásico juego de terror', '2023-03-24', 100, TRUE),
+('Stardew Valley', 15000, 'Simulador de granja y vida rural', '2016-02-26', 200, TRUE),
+('God of War Ragnarök', 70000, 'Aventura épica basada en la mitología nórdica', '2022-11-09', 90, TRUE),
+('Portal 2', 20000, 'Juego de puzles en primera persona', '2011-04-19', 80, TRUE),
+('Elden Ring', 60000, 'RPG de acción en un mundo abierto', '2022-02-25', 120, TRUE),
+('Cities: Skylines', 30000, 'Simulador de construcción de ciudades', '2015-03-10', 70, TRUE),
+('Doom Eternal', 40000, 'Shooter frenético en primera persona', '2020-03-20', 95, TRUE),
+('Animal Crossing: New Horizons', 60000, 'Simulador de vida en una isla', '2020-03-20', 180, TRUE),
+('Hades', 25000, 'Roguelike de acción mitológico', '2020-09-17', 110, TRUE);
 
 -- Insertar desarrolladoras y relacionarlas con juegos
 INSERT INTO games_developers(id_game, name) VALUES
-(1, 'Re-Logic'),                  -- Terraria
-(2, 'CD Projekt Red'),            -- The Witcher 3
-(3, 'EA Sports'),                 -- FIFA 23
-(4, 'Mojang Studios'),            -- Minecraft
-(5, 'Infinity Ward'),             -- Call of Duty: Modern Warfare
-(6, 'Firaxis Games'),             -- Civilization VI
-(7, 'Rockstar Games'),            -- Red Dead Redemption 2
-(8, 'Capcom'),                    -- Resident Evil 4 Remake
-(9, 'ConcernedApe'),              -- Stardew Valley
-(10, 'Santa Monica Studio'),      -- God of War Ragnarök
-(11, 'Valve'),                    -- Portal 2
-(12, 'FromSoftware'),             -- Elden Ring
-(13, 'Colossal Order'),           -- Cities: Skylines
-(14, 'id Software'),              -- Doom Eternal
-(15, 'Nintendo'),                 -- Animal Crossing: New Horizons
-(16, 'Supergiant Games');         -- Hades
+(1, 'Re-Logic'),
+(2, 'CD Projekt Red'),
+(3, 'EA Sports'),
+(4, 'Mojang Studios'),
+(5, 'Infinity Ward'),
+(6, 'Firaxis Games'),
+(7, 'Rockstar Games'),
+(8, 'Capcom'),
+(9, 'ConcernedApe'),
+(10, 'Santa Monica Studio'),
+(11, 'Valve'),
+(12, 'FromSoftware'),
+(13, 'Colossal Order'),
+(14, 'id Software'),
+(15, 'Nintendo'),
+(16, 'Supergiant Games');
 
 -- Insertar URLs de imágenes para los juegos
 INSERT INTO games_imgs(id_game, url) VALUES
-(1, 'https://cdn.akamai.steamstatic.com/steam/apps/105600/header.jpg'),                -- Terraria
-(2, 'https://cdn.akamai.steamstatic.com/steam/apps/292030/header.jpg'),                -- The Witcher 3
-(3, 'https://image.api.playstation.com/vulcan/ap/rnd/202207/0515/BOwvC0Q9dfw4g8eJXnD6YYj8.png'), -- FIFA 23
-(4, 'https://cdn.akamai.steamstatic.com/steam/apps/1938650/header.jpg'),               -- Minecraft
-(5, 'https://cdn.akamai.steamstatic.com/steam/apps/1938090/header.jpg'),               -- Call of Duty: Modern Warfare
-(6, 'https://cdn.akamai.steamstatic.com/steam/apps/289070/header.jpg'),                -- Civilization VI
-(7, 'https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg'),               -- Red Dead Redemption 2
-(8, 'https://cdn.akamai.steamstatic.com/steam/apps/2050650/header.jpg'),               -- Resident Evil 4 Remake
-(9, 'https://cdn.akamai.steamstatic.com/steam/apps/413150/header.jpg'),                -- Stardew Valley
-(10, 'https://image.api.playstation.com/vulcan/ap/rnd/202207/1210/4xJ8XB3bi888QTLZYdl7Oi0s.png'), -- God of War Ragnarök
-(11, 'https://cdn.akamai.steamstatic.com/steam/apps/620/header.jpg'),                  -- Portal 2
-(12, 'https://cdn.akamai.steamstatic.com/steam/apps/1245620/header.jpg'),              -- Elden Ring
-(13, 'https://cdn.akamai.steamstatic.com/steam/apps/255710/header.jpg'),               -- Cities: Skylines
-(14, 'https://cdn.akamai.steamstatic.com/steam/apps/782330/header.jpg'),               -- Doom Eternal
-(15, 'https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/ncom/software/switch/70010000027619/9989957eae3a6b545194c42fec2071675c34aadacd65e6b33fdfe7b3b6a86c3a'), -- Animal Crossing: New Horizons
-(16, 'https://cdn.akamai.steamstatic.com/steam/apps/1145360/header.jpg');              -- Hades
+(1, 'https://cdn.akamai.steamstatic.com/steam/apps/105600/header.jpg'),
+(2, 'https://cdn.akamai.steamstatic.com/steam/apps/292030/header.jpg'),
+(3, 'https://image.api.playstation.com/vulcan/ap/rnd/202207/0515/BOwvC0Q9dfw4g8eJXnD6YYj8.png'),
+(4, 'https://cdn.akamai.steamstatic.com/steam/apps/1938650/header.jpg'),
+(5, 'https://cdn.akamai.steamstatic.com/steam/apps/1938090/header.jpg'),
+(6, 'https://cdn.akamai.steamstatic.com/steam/apps/289070/header.jpg'),
+(7, 'https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg'),
+(8, 'https://cdn.akamai.steamstatic.com/steam/apps/2050650/header.jpg'),
+(9, 'https://cdn.akamai.steamstatic.com/steam/apps/413150/header.jpg'),
+(10, 'https://image.api.playstation.com/vulcan/ap/rnd/202207/1210/4xJ8XB3bi888QTLZYdl7Oi0s.png'),
+(11, 'https://cdn.akamai.steamstatic.com/steam/apps/620/header.jpg'),
+(12, 'https://cdn.akamai.steamstatic.com/steam/apps/1245620/header.jpg'),
+(13, 'https://cdn.akamai.steamstatic.com/steam/apps/255710/header.jpg'),
+(14, 'https://cdn.akamai.steamstatic.com/steam/apps/782330/header.jpg'),
+(15, 'https://assets.nintendo.com/image/upload/ar_16:9,c_lpad,w_1240/b_white/f_auto/q_auto/ncom/software/switch/70010000027619/9989957eae3a6b545194c42fec2071675c34aadacd65e6b33fdfe7b3b6a86c3a'),
+(16, 'https://cdn.akamai.steamstatic.com/steam/apps/1145360/header.jpg');
 
 -- Relacionar juegos con plataformas
 INSERT INTO games_platforms(id_game, id_platform)
@@ -315,10 +315,10 @@ CREATE TABLE transaction_details (
 
 CREATE TABLE reviews(
     id_review INT PRIMARY KEY AUTO_INCREMENT,
-    id_game INT,
-    id_login INT,
-    review TEXT,
-    score float,
+    id_game INT NOT NULL,
+    id_login INT NOT NULL,
+    review TEXT NOT NULL,
+    score float NOT NULL,
     FOREIGN KEY (id_game) REFERENCES games(id_game)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
@@ -327,9 +327,23 @@ CREATE TABLE reviews(
     ON UPDATE CASCADE
 );
 
+-- Agregar reseñas de ejemplo para los juegos
+INSERT INTO reviews(id_game, id_login, review, score) VALUES
+(1, 1, 'Un juego increíble con infinitas posibilidades de construcción y exploración. Me encanta la libertad que ofrece.', 4.5),
+(2, 2, 'Una de las mejores historias que he experimentado en un videojuego. Los personajes son memorables y el mundo es inmenso.', 5.0),
+(3, 1, 'Buen simulador de fútbol, aunque no trae muchas novedades respecto a versiones anteriores.', 3.5),
+(4, 2, 'Un clásico que nunca pasa de moda. La creatividad no tiene límites en este juego.', 4.8),
+(5, 1, 'Gráficos impresionantes y buen multijugador, pero la campaña es demasiado corta.', 4.0),
+(6, 2, 'Adictivo y desafiante. Cada partida es diferente y la estrategia es fundamental.', 4.7),
+(7, 1, 'Una obra maestra en todos los sentidos. La atención al detalle es impresionante.', 5.0),
+(8, 2, 'Excelente remake que mantiene la esencia del original pero con gráficos y jugabilidad modernos.', 4.9),
+(9, 1, 'Relajante y adictivo. Perfecto para desconectar y disfrutar de la vida virtual en el campo.', 4.6),
+(10, 2, 'Una secuela a la altura. Combates épicos y una historia emotiva que no decepciona.', 4.8);
+
 CREATE TABLE requeriments( 
     id_requeriment INT PRIMARY KEY AUTO_INCREMENT, 
-    id_game INT NOT NULL, tipo ENUM('minimos', 'recomendados') NOT NULL, 
+    id_game INT NOT NULL, 
+    tipo ENUM('minimos', 'recomendados') NOT NULL, 
     procesador VARCHAR(255), 
     memoria VARCHAR(255),
     graficos VARCHAR(255), 
@@ -343,13 +357,6 @@ CREATE TABLE requeriments(
  -- Insertar requerimientos mínimos
 INSERT INTO requeriments (
     id_game, tipo, procesador, memoria, graficos, almacenamiento
-) VALUES (
-    2, 'minimos', 'Intel Core 2 Duo E5200', '4 GB RAM', 'GeForce 9800GTX+ (1GB)', '9 GB disponibles'
-);
-
--- Insertar requerimientos recomendados
-INSERT INTO requeriments (
-    id_game, tipo, procesador, memoria, graficos, almacenamiento
-) VALUES (
-    2, 'recomendados', 'Intel Core i5', '8 GB RAM', 'GeForce GTX 560', '9 GB disponibles'
-);
+) VALUES 
+(2, 'minimos', 'Intel Core 2 Duo E5200', '4 GB RAM', 'GeForce 9800GTX+ (1GB)', '9 GB disponibles'),
+(2, 'recomendados', 'Intel Core i5', '8 GB RAM', 'GeForce GTX 560', '9 GB disponibles');

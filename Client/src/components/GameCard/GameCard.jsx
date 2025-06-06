@@ -66,7 +66,7 @@ const GameCard = ({id, name, image, platform, price}) => {
                 </div>
                 <div className="game-bottom">
                     <div className="game-price">
-                        ARS ${price}
+                        {price === 0 ? 'Gratis' : `ARS ${price}`} 
                     </div>
                     <button 
                         className='add-to-cart btn' 

@@ -95,11 +95,7 @@ router.get('/getById/:id', async (req, res) => {
 
         if (game.length == 0) return handleError(res, 'No se encontro el juego', null, 404);
 
-        console.log(game);
-
         const gameData = game[0];
-
-        console.log(gameData);
 
         const [genres] = await conex.query(`
             SELECT g.name FROM genres g
@@ -118,14 +114,29 @@ router.get('/getById/:id', async (req, res) => {
         gameData.platforms = platforms.map(p => p.name);
 
        
+        const [requeriments] = await conex.query(`
+            SELECT tipo, procesador, memoria, graficos, almacenamiento
+            FROM requeriments
+            WHERE id_game = ?`,
+            [gameData.id_game]
+        );
+
+        gameData.min_requeriment = requeriments.find(r => r.tipo === 'minimos') || {};
+        gameData.rec_requeriment = requeriments.find(r => r.tipo === 'recomendados') || {};;
+
+        const [reviews] = await conex.query(
+            'SELECT AVG(score) FROM reviews WHERE id_game = ?',
+            [gameData.id_game]
+        );
+
+        gameData.score = reviews.length > 0 ? reviews[0]['AVG(score)'] : 0;
+
         const [images] = await conex.query(`
-            SELECT url FROM games_imgs
-            WHERE id_game = ?
-        `, [gameData.id_game]);
+            SELECT url FROM games_imgs WHERE id_game = ?`,
+            [gameData.id_game]
+        );
 
         gameData.images = images.map(img => img.url);
-
-        gameData.mainImage = gameData.images.length > 0 ? gameData.images[0] : null;
 
         res.status(200).json({ game: gameData });
 
@@ -155,16 +166,22 @@ router.get('/all', async (req, res) => {
                 JOIN games_platforms gp ON p.id_platform = gp.id_platform WHERE gp.id_game = ?`,
                 [game.id_game]
             );
-
+            
             game.platforms = platforms.map(p => p.name);
 
+            const [reviews] = await conex.query(
+                'SELECT AVG(score) FROM reviews WHERE id_game = ?',
+                [game.id_game]
+            );
+
+            game.score = reviews[0]['AVG(score)'] || 0;
+
             const [images] = await conex.query(`
-                SELECT url FROM games_imgs WHERE id_game = ? LIMIT 1`,
+                SELECT url FROM games_imgs WHERE id_game = ?`,
                 [game.id_game]
             );
 
             game.image = images.length > 0 ? images[0].url : null;
-
         }
 
         res.status(200).json({ games });
