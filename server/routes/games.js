@@ -9,6 +9,7 @@ let conex;
 const init = async () => conex = await createConnection();
 init();
 
+//Crear juego
 router.post('/create', upload.single('file'), async (req, res) => {
 
     const { name, price, description, release_date, stock, genres, platforms, minimos, recomendados } = req.body;
@@ -87,6 +88,7 @@ router.post('/create', upload.single('file'), async (req, res) => {
 
 });
 
+//Traer juego por ID
 router.get('/getById/:id', async (req, res) => {
     const gameId = req.params.id;
 
@@ -117,7 +119,7 @@ router.get('/getById/:id', async (req, res) => {
         const [requeriments] = await conex.query(`
             SELECT tipo, procesador, memoria, graficos, almacenamiento
             FROM requeriments
-            WHERE id_game = ?`,
+            WHERE id_game = ?`,     
             [gameData.id_game]
         );
 
@@ -146,6 +148,7 @@ router.get('/getById/:id', async (req, res) => {
     }
 })
 
+//Traer todos los juegos
 router.get('/all', async (req, res) => {
 
     try {
@@ -192,83 +195,7 @@ router.get('/all', async (req, res) => {
     }
 });
 
-router.get('/:id', async (req, res) => {
-
-    const gameID = req.params.id;
-
-    try {
-
-        const [games] = await conex.query('SELECT * FROM games WHERE id_game = ? AND deleted_at IS NULL',
-            [gameID]
-        );
-
-        if (games.length == 0) return handleErro(res, "Jueego no encontrado", null, 404);
-
-        const game = games[0];
-
-
-        const [genres] = await conex.query(`
-        SELECT g.name FROM genres g
-        JOIN games_genres gg ON g.id_genre = gg.id_genre WHERE gg.id_game = ? `,
-            [game.id_game]
-        );
-
-        game.genres = genres.map(g => g.name);
-
-        const [platforms] = await conex.query(`
-
-        SELECT p.name FROM platforms p
-        JOIN games_platforms gp ON p.id_platform = gp.id_platform WHERE gp.id_game = ?`,
-            [game.id_game]
-
-        );
-
-        game.platforms = platforms.map(p => p.name);
-
-        const [requeriments] = await conex.query(`
-        SELECT tipo, procesador, memoria, graficos, almacenamiento
-        FROM requeriments
-        WHERE id_game = ?`,
-            [game.id_game]
-        );
-
-        game.requisitos = {
-            minimos: {},
-            recomendados: {}
-        };
-
-        for (let req of requeriments) {
-
-            if (req.tipo === 'minimos') {
-
-                game.requisitos.minimos = {
-                    procesador: req.procesador,
-                    memoria: req.memoria,
-                    graficos: req.graficos,
-                    almacenamiento: req.almacenamiento
-                };
-
-            } else if (req.tipo === 'recomendados') {
-
-                game.requisitos.recomendados = {
-                    procesador: req.procesador,
-                    memoria: req.memoria,
-                    graficos: req.graficos,
-                    almacenamiento: req.almacenamiento
-                };
-
-            }
-        }
-
-        res.status(200).json({ games });
-
-    } catch (err) {
-        return handleError(res, 'Error al obtener el juego', err);
-    }
-
-});
-
-
+//Actualizar Jeugoooo
 router.put('/update/:id', upload.single('file'), async (req, res) => {
     const { name, price, description, release_date, stock, genres, platforms, minimos, recomendados, existImg } = req.body;
 
@@ -327,6 +254,7 @@ router.put('/update/:id', upload.single('file'), async (req, res) => {
 
 });
 
+//Eliminar juego
 router.delete('/delete/:id', async (req, res) => {
     try {
 
